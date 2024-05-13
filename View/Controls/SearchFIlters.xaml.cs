@@ -14,12 +14,16 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace Notatnik_WPF;
-public partial class NoteItem : UserControl
+
+/// <summary>
+/// Interaction logic for SearchFIlters.xaml
+/// </summary>
+public partial class SearchFilters : UserControl
 {
-    public NoteItem()
+    public SearchFilters()
     {
         InitializeComponent();
 
-        DataContext = new NoteItemViewModel();
+
     }
 }

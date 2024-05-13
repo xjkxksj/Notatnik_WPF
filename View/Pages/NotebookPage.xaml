@@ -19,33 +19,26 @@
             <RowDefinition Height="6*" />
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Column="0" Grid.Row="0" Text="Notatnik Logo" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <ListBox Grid.Column="0" Grid.Row="1" Background="Transparent" BorderBrush="Transparent">
-            <ListBox.ItemContainerStyle>
-                <Style TargetType="ListBoxItem">
-                    <Style.Resources>
-                        <Style TargetType="Border">
-                            <Setter Property="CornerRadius" Value="0,10,10,0"/>
-                        </Style>
-                    </Style.Resources>
-                </Style>
-            </ListBox.ItemContainerStyle>
-            <ListBoxItem>Item 1</ListBoxItem>
-            <ListBoxItem>Item 2</ListBoxItem>
-            <ListBoxItem>Item 3</ListBoxItem>
-            <!-- Add more items as needed -->
-        </ListBox>
+        <TextBlock Grid.Column="0" Grid.Row="0" Text="Notebook" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <StackPanel Grid.Column="0" Grid.Row="1">
+            <TreeView >
+                <TreeViewItem Header="Employee1">
+                    <TreeViewItem Header="Jesper"/>
+                    <TreeViewItem Header="Aaberg"/>
+                    <TreeViewItem Header="12345"/>
+                </TreeViewItem>
+                <TreeViewItem Header="Employee2">
+                    <TreeViewItem Header="Dominik"/>
+                    <TreeViewItem Header="Paiha"/>
+                    <TreeViewItem Header="98765"/>
+ 
+                </TreeViewItem>
+            </TreeView>
+        </StackPanel>
 
 
-        <Border Grid.Column="1" Grid.Row="0"
-            CornerRadius="20,20,20,20" Margin="10,10,200,10" BorderBrush="Black" Background="Snow" MaxHeight="50">
+        <local:SearchBar Grid.Column="1" Grid.Row="0" Margin="10,5,10,10"/>
 
-            <StackPanel Grid.Column="1" Grid.Row="1">
-                <TextBlock Text="Wyszukiwarka" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-
-            </StackPanel>
-        </Border>
-        
         <Border Grid.Column="1" Grid.Row="1"
         CornerRadius="10,10,0,0" BorderBrush="Black" Background="Snow">
 
@@ -53,16 +46,20 @@
                 <TextBlock Text="Notatnik" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
 
-                <ListBox>
-
-                    <ListBoxItem>Item 1</ListBoxItem>
-                    <ListBoxItem>Item 2</ListBoxItem>
-                    <ListBoxItem>Item 3</ListBoxItem>
-                    <!-- Add more items as needed -->
-                </ListBox>
+                <ScrollViewer>
+                    <ItemsControl ItemsSource="{Binding Notes}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <local:NoteItem/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+                
             </StackPanel>
         </Border>
-       
 
+
+       
     </Grid>
 </Page>

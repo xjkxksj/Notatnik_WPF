@@ -23,6 +23,8 @@ public partial class NotebookPage : Page
     public NotebookPage()
     {
         InitializeComponent();
+
+        DataContext = new NotebookPageViewModel();
     }
 }
 

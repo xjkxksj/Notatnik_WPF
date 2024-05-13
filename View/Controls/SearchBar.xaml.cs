@@ -14,12 +14,12 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace Notatnik_WPF;
-public partial class NoteItem : UserControl
+public partial class SearchBar : UserControl
 {
-    public NoteItem()
+    public SearchBar()
     {
         InitializeComponent();
 
-        DataContext = new NoteItemViewModel();
+
     }
 }
