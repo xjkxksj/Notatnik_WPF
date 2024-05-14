@@ -19,7 +19,5 @@ public partial class NoteItem : UserControl
     public NoteItem()
     {
         InitializeComponent();
-
-        DataContext = new NoteItemViewModel();
     }
 }
