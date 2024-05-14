@@ -8,11 +8,11 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="NotebookPage">
 
-    <Grid Background="LightGray">
+    <Grid Background="#d7d9ce">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*" />
             <ColumnDefinition Width="15*" />
-            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="auto" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*" />
@@ -21,23 +21,31 @@
 
         <TextBlock Grid.Column="0" Grid.Row="0" Text="Notebook" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         <StackPanel Grid.Column="0" Grid.Row="1">
-            <TreeView >
-                <TreeViewItem Header="Employee1">
-                    <TreeViewItem Header="Jesper"/>
-                    <TreeViewItem Header="Aaberg"/>
-                    <TreeViewItem Header="12345"/>
-                </TreeViewItem>
-                <TreeViewItem Header="Employee2">
-                    <TreeViewItem Header="Dominik"/>
-                    <TreeViewItem Header="Paiha"/>
-                    <TreeViewItem Header="98765"/>
+            <Button Content="Add Note" Style="{DynamicResource RoundButton}" Command="{Binding AddNoteCommand}" />
+            <StackPanel>
+                <TreeView >
+                    <TreeViewItem Header="Employee1">
+                        <TreeViewItem Header="Jesper"/>
+                        <TreeViewItem Header="Aaberg"/>
+                        <TreeViewItem Header="12345"/>
+                    </TreeViewItem>
+                    <TreeViewItem Header="Employee2">
+                        <TreeViewItem Header="Dominik"/>
+                        <TreeViewItem Header="Paiha"/>
+                        <TreeViewItem Header="98765"/>
  
-                </TreeViewItem>
-            </TreeView>
+                    </TreeViewItem>
+                </TreeView>
+            </StackPanel>
         </StackPanel>
 
-
         <local:SearchBar Grid.Column="1" Grid.Row="0" Margin="10,5,10,10"/>
+        <Expander Grid.Column="2" Grid.Row="1" Name="myExpander"
+                  Header="Filters" 
+                  ExpandDirection="Down" IsExpanded="False">
+            
+            <local:SearchFilters />
+        </Expander>
 
         <Border Grid.Column="1" Grid.Row="1"
         CornerRadius="10,10,0,0" BorderBrush="Black" Background="Snow">

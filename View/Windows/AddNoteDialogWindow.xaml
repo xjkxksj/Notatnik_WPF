@@ -1,0 +1,57 @@
+﻿<Window x:Class="Notatnik_WPF.AddNoteDialogWindow"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Notatnik_WPF"
+      mc:Ignorable="d" Height="350" MinWidth="400" MinHeight="350" 
+      d:DesignWidth="400" d:DesignHeight="350"
+      SizeToContent="Width"
+      Title="AddNoteDialogWindow">
+
+    <Grid Background="#d7d9ce">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Label Margin="3">Nazwa:</Label>
+        <TextBox Margin="3" Grid.Column="1" Name="nazwa" MaxHeight="28"/>
+        <Label Margin="3" Grid.Row="1">Treść:</Label>
+        <TextBox Margin="3" Grid.Row="1" Grid.Column="1" Name="tresc" 
+                 TextWrapping="Wrap"
+                 AcceptsReturn="True"
+                 VerticalScrollBarVisibility="Visible"/>
+        <Label Margin="3" Grid.Row="2">Kategoria:</Label>
+        <ComboBox Margin="3" Grid.Row="2" Grid.Column="1" Name="kategoria" MaxHeight="28"
+                  SelectedIndex="0">
+            <ComboBoxItem>Praca</ComboBoxItem>
+            <ComboBoxItem>Dom</ComboBoxItem>
+            <ComboBoxItem>Uczelnia</ComboBoxItem>
+        </ComboBox>
+        <Label Margin="3" Grid.Row="3">Tagi:</Label>
+        <ListView Margin="3" Grid.Row="3" Grid.Column="1" Name="tagi" 
+                 SelectionMode="Multiple"
+                 ScrollViewer.HorizontalScrollBarVisibility="Auto">
+            <ListViewItem>Tag1</ListViewItem>
+            <ListViewItem>Tag2</ListViewItem>
+            <ListViewItem>Tag3</ListViewItem>
+            <ListViewItem>Tag4</ListViewItem>
+            <ListViewItem>Tag5</ListViewItem>
+            <ListViewItem>Tag6</ListViewItem>
+        </ListView>
+        <StackPanel Orientation="Horizontal" Grid.Row="4"
+                    Grid.ColumnSpan="2" HorizontalAlignment="Right"
+                    MaxHeight="48">
+            <Button IsDefault="True" Style="{DynamicResource RoundButton}"
+                    >OK</Button>
+            <Button IsCancel="True" Style="{DynamicResource RoundButton}">Anuluj</Button>
+        </StackPanel>
+    </Grid>
+</Window>

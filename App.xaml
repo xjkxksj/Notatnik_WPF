@@ -4,6 +4,6 @@
              xmlns:local="clr-namespace:Notatnik_WPF"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary Source="View/Styles/Buttons.xaml"/>
     </Application.Resources>
 </Application>
