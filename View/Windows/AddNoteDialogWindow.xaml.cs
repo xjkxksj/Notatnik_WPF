@@ -23,6 +23,7 @@ namespace Notatnik_WPF
         public AddNoteDialogWindow()
         {
             InitializeComponent();
+            DataContext = new AddNoteDialogWindowViewModel();
         }
     }
 }

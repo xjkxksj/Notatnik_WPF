@@ -14,10 +14,5 @@ internal class NoteItemViewModel : BaseViewModel
     public string Content { get; set; }
     public DateTime EditDate { get; set; }
 
-    public NoteItemViewModel()
-    {
-        OnPropertyChanged(nameof(Title));
-        OnPropertyChanged(nameof(Content));
-    }
 
 }

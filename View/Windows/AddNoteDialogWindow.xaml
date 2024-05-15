@@ -29,28 +29,23 @@
                  AcceptsReturn="True"
                  VerticalScrollBarVisibility="Visible"/>
         <Label Margin="3" Grid.Row="2">Kategoria:</Label>
-        <ComboBox Margin="3" Grid.Row="2" Grid.Column="1" Name="kategoria" MaxHeight="28"
+        <ComboBox Margin="3" Grid.Row="2" Grid.Column="1" Name="kategoria" MaxHeight="28" ItemsSource="{Binding Repository.Categories}"
+                  DisplayMemberPath="Name"
+                  SelectedValuePath="Id"
                   SelectedIndex="0">
-            <ComboBoxItem>Praca</ComboBoxItem>
-            <ComboBoxItem>Dom</ComboBoxItem>
-            <ComboBoxItem>Uczelnia</ComboBoxItem>
         </ComboBox>
         <Label Margin="3" Grid.Row="3">Tagi:</Label>
+        
         <ListView Margin="3" Grid.Row="3" Grid.Column="1" Name="tagi" 
                  SelectionMode="Multiple"
-                 ScrollViewer.HorizontalScrollBarVisibility="Auto">
-            <ListViewItem>Tag1</ListViewItem>
-            <ListViewItem>Tag2</ListViewItem>
-            <ListViewItem>Tag3</ListViewItem>
-            <ListViewItem>Tag4</ListViewItem>
-            <ListViewItem>Tag5</ListViewItem>
-            <ListViewItem>Tag6</ListViewItem>
+                 ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                  ItemsSource="{Binding Repository.Tags}" DisplayMemberPath="Name" SelectedValuePath="Id"
+                  >
         </ListView>
         <StackPanel Orientation="Horizontal" Grid.Row="4"
                     Grid.ColumnSpan="2" HorizontalAlignment="Right"
                     MaxHeight="48">
-            <Button IsDefault="True" Style="{DynamicResource RoundButton}"
-                    >OK</Button>
+            <Button IsDefault="True" Style="{DynamicResource RoundButton}" Command="{Binding AddNoteCommand}" >OK</Button>
             <Button IsCancel="True" Style="{DynamicResource RoundButton}">Anuluj</Button>
         </StackPanel>
     </Grid>
