@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Notatnik_WPF"
+      local:WindowCloser.EnableWindowClosing="True"
       mc:Ignorable="d" Height="350" MinWidth="400" MinHeight="350" 
       d:DesignWidth="400" d:DesignHeight="350"
       SizeToContent="Width"
@@ -18,8 +19,8 @@
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="4*"/>
         </Grid.ColumnDefinitions>
         <Label Margin="3">Nazwa:</Label>
         <TextBox Margin="3" Grid.Column="1" Name="nazwa" MaxHeight="28"/>

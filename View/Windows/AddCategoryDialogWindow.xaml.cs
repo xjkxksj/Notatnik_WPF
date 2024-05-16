@@ -10,19 +10,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Notatnik_WPF;
-
-/// <summary>
-/// Interaction logic for SearchFIlters.xaml
-/// </summary>
-public partial class SearchFilters : UserControl
+namespace Notatnik_WPF
 {
-    public SearchFilters()
+    /// <summary>
+    /// Logika interakcji dla klasy AddCategoryDialogWindow.xaml
+    /// </summary>
+    public partial class AddCategoryDialogWindow : Window
     {
-        InitializeComponent();
-        DataContext = new SearchFiltersViewModel();
+        public AddCategoryDialogWindow()
+        {
+            InitializeComponent();
+            DataContext = new AddCategoryDialogWindowViewModel();
+        }
     }
 }

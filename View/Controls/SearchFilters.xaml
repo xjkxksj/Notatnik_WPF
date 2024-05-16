@@ -25,11 +25,14 @@
             <DatePicker x:Name="datePicker2" DisplayDateStart="1900-01-01" SelectedDate="{x:Null}" Text="From" />
         </StackPanel>
         <TextBlock HorizontalAlignment="Center" Text="Category " FontSize="15"></TextBlock>
-        <ComboBox Width="150">
-            <ComboBoxItem>ComboBox Item #1</ComboBoxItem>
-            <ComboBoxItem IsSelected="True">ComboBox Item #2</ComboBoxItem>
-            <ComboBoxItem>ComboBox Item #3</ComboBoxItem>
+        <ComboBox Width="auto" ItemsSource="{Binding Repository.Categories}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Name}" />
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
         </ComboBox>
+        <Button Content="Add Category" Style="{DynamicResource RoundButton}" Command="{Binding AddCategoryCommand}" />
         <WrapPanel HorizontalAlignment="Center">
             <CheckBox Content="Tag1" Margin="10" />
             <CheckBox Content="Tag2" Margin="10" />
