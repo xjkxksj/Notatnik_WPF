@@ -30,12 +30,13 @@ internal class AddNoteDialogWindowViewModel : BaseViewModel, ICloseWindows
     {
         Title = note.Title;
         Content = note.Content;
-        SelectedCategoryId = Categories.IndexOf(note.Categories.First());
+        SelectedCategoryId = Categories.IndexOf(note.Category);
     }
 
     private void AddNote()
     {
-        Note = new Note { Title = Title, Content = Content, EditTime = DateTime.Now };
+        Note = new Note { Title = Title, Content = Content, EditTime = DateTime.Now , Category = Categories[SelectedCategoryId] };
+        Messenger.Send("SaveNote", Note);
         Close?.Invoke();
     }
 

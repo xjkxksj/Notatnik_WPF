@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,25 +8,24 @@ using System.Windows.Input;
 namespace Notatnik_WPF;
 internal class NoteItemViewModel : BaseViewModel
 {
-    public ICommand OpenNote { get; set; }
-    public ICommand DeleteNote { get; set; }
+    public ICommand OpenNoteCommand { get; set; }
+    public ICommand DeleteNoteCommand { get; set; }
     public NoteItemViewModel(Note note)
     {
         Title = note.Title;
         Content = note.Content;
-        OpenNote = new RelayCommand(OpenEditNote);
-        DeleteNote = new RelayCommand(OpenEditNote2);
+        OpenNoteCommand = new RelayCommand(OpenNote);
+        DeleteNoteCommand = new RelayCommand(DeleteNote);
     }
-    void OpenEditNote()
+    void OpenNote()
     {
         Messenger.Send("OpenNote", Title);
     }
-    void OpenEditNote2()
+    void DeleteNote()
     {
-        Messenger.Send("OpenNote", "DUPA");
+        Messenger.Send("DeleteNote", Title);
     }
     public string Title { get; set; }
-
     public string Content { get; set; }
     public DateTime EditDate { get; set; }
 

@@ -10,7 +10,7 @@
     <Grid>
         <i:Interaction.Triggers>
             <i:EventTrigger EventName="MouseLeftButtonDown">
-                <i:InvokeCommandAction Command="{Binding OpenNote}" />
+                <i:InvokeCommandAction Command="{Binding OpenNoteCommand}" />
             </i:EventTrigger>
         </i:Interaction.Triggers>
    
@@ -47,7 +47,7 @@
                 </TextBlock>
             </StackPanel>
         </Border>
-        <Button Command="{Binding DeleteNote}" Width="Auto" HorizontalAlignment="Right" VerticalAlignment="Top" Cursor="Hand">
+        <Button Command="{Binding DeleteNoteCommand}" Width="Auto" HorizontalAlignment="Right" VerticalAlignment="Top" Cursor="Hand">
             <Button.Template>
                 <ControlTemplate TargetType="Button">
                     <Border x:Name="border" Background="Red" BorderBrush="Black" BorderThickness="1" CornerRadius="10" Height="20" Width="20" Padding="2">

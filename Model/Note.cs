@@ -10,6 +10,6 @@ internal class Note
     public string Title { get; set; }
     public string Content { get; set; }
     public DateTime EditTime { get; set; }
-    public List<Category> Categories { get; set; }
+    public Category Category { get; set; }
     public List<Tag> Tags { get; set; }
 }

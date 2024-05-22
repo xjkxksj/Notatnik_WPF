@@ -16,6 +16,8 @@ internal class NotebookPageViewModel
 
     public Repository repository = new Repository();
 
+    NoteItemViewModel openedNote;
+
     public ICommand AddNoteCommand { get; set; }
 
     public NotebookPageViewModel()
@@ -25,37 +27,47 @@ internal class NotebookPageViewModel
         repository.loadFromFile("Repo.txt");
         AddNoteCommand = new RelayCommand(AddNote);
         Notes = new ObservableCollection<NoteItemViewModel>();
+        foreach (Note note in repository.Notes)
+        {
+            Notes.Add(new NoteItemViewModel(note));
+        }
 
         Messenger.Subscribe<string>("CreateCategory", CreateCategory);
         Messenger.Subscribe<string>("OpenNote", OpenNote);
+        Messenger.Subscribe<string>("DeleteNote", DeleteNote);
+        Messenger.Subscribe<Note>("SaveNote", SaveNote);
         Messenger.Send("CategoryChanged", repository.Categories);
 
 
     }
+
+    private void DeleteNote(string title)
+    {
+        Note note = repository.Notes.FirstOrDefault(n => n.Title == title);
+        NoteItemViewModel vm = Notes.FirstOrDefault(n => n.Title == title);
+
+        repository.Notes.Remove(note);
+        repository.saveToFile("Repo.txt");
+
+        Notes.Remove(vm);
+    }
     private void OpenNote(string title)
     {
-        
-        Note note = repository.Notes.FirstOrDefault(n => n.Title == title);
-        if (note == null)
-            throw new Exception("Tried to open note that is not in repository");
 
-        repository.Notes.Remove(note); 
+        Note note = repository.Notes.FirstOrDefault(n => n.Title == title);
+        NoteItemViewModel vm = Notes.FirstOrDefault(n => n.Title == title);
+
+        openedNote = vm;
+        repository.Notes.Remove(note);
 
         AddNoteDialogWindowViewModel addNoteVM = new AddNoteDialogWindowViewModel(repository.Categories, note);
         AddNoteDialogWindow addNoteView = new AddNoteDialogWindow();
-
-
-        addNoteVM.Close = () =>
-        {
-            SaveNote(addNoteVM.Note);
-        };
 
         addNoteView.DataContext = addNoteVM;
         addNoteView.ShowDialog();
     }
     private void CreateCategory(string categoryName)
     {
-        Console.WriteLine("CreateCategory");
         Category category = new Category { Name = categoryName };
         repository.Categories.Add(category);
         //repository.saveToFile("RepoCategories.txt", "Categories");
@@ -67,20 +79,23 @@ internal class NotebookPageViewModel
         AddNoteDialogWindowViewModel addNoteVM = new AddNoteDialogWindowViewModel(repository.Categories);
         AddNoteDialogWindow addNoteView = new AddNoteDialogWindow();
 
-   
-        addNoteVM.Close = () => 
-        {
-            SaveNote(addNoteVM.Note);
-        };
-
         addNoteView.DataContext = addNoteVM;
         addNoteView.ShowDialog();
     }
 
     private void SaveNote(Note note)
     {
+        if(repository.Notes.FirstOrDefault(n => n.Title == note.Title) != null)
+        {
+            return;
+        }
+        if (openedNote != null)
+        {
+            Notes.Remove(openedNote);
+            openedNote = null;
+        }
+
         repository.Notes.Add(note);
-        //repository.saveToFile("RepoNotes.txt", "Notes");
         repository.saveToFile("Repo.txt");
         Notes.Add(new NoteItemViewModel(note));
     }
