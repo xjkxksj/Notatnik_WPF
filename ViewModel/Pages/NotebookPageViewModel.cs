@@ -3,10 +3,12 @@ using Notatnik_WPF;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Data;
 using System.Windows.Input;
 
 namespace Notatnik_WPF;
@@ -18,10 +20,12 @@ internal class NotebookPageViewModel
 
     NoteItemViewModel openedNote;
 
+    public ICollectionView FilteredNotes { get; set; }
     public ICommand AddNoteCommand { get; set; }
 
     public NotebookPageViewModel()
     {
+
         //repository.loadFromFile("RepoNotes.txt");
         //repository.loadFromFile("RepoCategories.txt");
         repository.loadFromFile("Repo.txt");
@@ -32,6 +36,9 @@ internal class NotebookPageViewModel
             Notes.Add(new NoteItemViewModel(note));
         }
 
+        FilteredNotes = CollectionViewSource.GetDefaultView(Notes);
+        FilteredNotes.Filter = YourFilterMethod;
+
         Messenger.Subscribe<string>("CreateCategory", CreateCategory);
         Messenger.Subscribe<string>("OpenNote", OpenNote);
         Messenger.Subscribe<string>("DeleteNote", DeleteNote);
@@ -40,7 +47,14 @@ internal class NotebookPageViewModel
 
 
     }
+    private bool YourFilterMethod(object item)
+    {
+        return true;
+        NoteItemViewModel note = item as NoteItemViewModel;
 
+        // Add your filter logic here. This is just an example.
+        return note != null && note.Title.Contains("TEST");
+    }
     private void DeleteNote(string title)
     {
         Note note = repository.Notes.FirstOrDefault(n => n.Title == title);
@@ -98,6 +112,8 @@ internal class NotebookPageViewModel
         repository.Notes.Add(note);
         repository.saveToFile("Repo.txt");
         Notes.Add(new NoteItemViewModel(note));
+
+        FilteredNotes.Refresh();
     }
 
 
