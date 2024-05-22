@@ -19,7 +19,9 @@ internal class NotebookPageViewModel
 
     public NotebookPageViewModel()
     {
-        repository.loadFromFile("Repo");
+        //repository.loadFromFile("RepoNotes.txt");
+        //repository.loadFromFile("RepoCategories.txt");
+        repository.loadFromFile("Repo.txt");
         AddNoteCommand = new RelayCommand(AddNote);
         Notes = new ObservableCollection<Note>(repository.Notes);
 
@@ -33,6 +35,8 @@ internal class NotebookPageViewModel
         Console.WriteLine("CreateCategory");
         Category category = new Category { Name = categoryName };
         repository.Categories.Add(category);
+        //repository.saveToFile("RepoCategories.txt", "Categories");
+        repository.saveToFile("Repo.txt");
         Messenger.Send("CategoryChanged", repository.Categories);
     }
     private void AddNote()
@@ -53,6 +57,8 @@ internal class NotebookPageViewModel
     private void SaveNote(Note note)
     {
         repository.Notes.Add(note);
+        //repository.saveToFile("RepoNotes.txt", "Notes");
+        repository.saveToFile("Repo.txt");
         Notes.Add(note);
     }
 
