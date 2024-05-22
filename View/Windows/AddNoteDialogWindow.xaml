@@ -33,9 +33,8 @@
         <Label Margin="3" Grid.Row="2">Kategoria:</Label>
         <ComboBox Margin="3" Grid.Row="2" Grid.Column="1" Name="kategoria" MaxHeight="28" ItemsSource="{Binding Categories}"
                   DisplayMemberPath="Name"
-                  SelectedValuePath="Id"
                   SelectedIndex="0"
-                  SelectedValue="{Binding SelectedCategoryId}">
+                  SelectedValue="{Binding SelectedCategory, Mode=TwoWay}">
         </ComboBox>
         <Label Margin="3" Grid.Row="3">Tagi:</Label>
         

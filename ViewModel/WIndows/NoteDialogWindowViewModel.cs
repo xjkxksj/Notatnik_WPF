@@ -14,7 +14,7 @@ internal class AddNoteDialogWindowViewModel : BaseViewModel, ICloseWindows
     public ObservableCollection<Category> Categories { get; set; }
     public string Title { get; set; }
     public string Content { get; set; }
-    public int SelectedCategoryId { get; set; }
+    public Category SelectedCategory { get; set; }
     public Note Note;
 
     public ICommand AddNoteCommand { get; set; }
@@ -24,18 +24,20 @@ internal class AddNoteDialogWindowViewModel : BaseViewModel, ICloseWindows
     {
         Categories = new ObservableCollection<Category>(categories);
         AddNoteCommand = new RelayCommand(AddNote);
+        if(categories.Count > 0)
+            SelectedCategory = categories[0];
     }
 
     public AddNoteDialogWindowViewModel(List<Category> categories, Note note) : this(categories)
     {
         Title = note.Title;
         Content = note.Content;
-        SelectedCategoryId = Categories.IndexOf(note.Category);
+        SelectedCategory = note.Category;
     }
 
     private void AddNote()
     {
-        Note = new Note { Title = Title, Content = Content, EditTime = DateTime.Now , Category = Categories[SelectedCategoryId] };
+        Note = new Note { Title = Title, Content = Content, EditTime = DateTime.Now , Category = SelectedCategory };
         Messenger.Send("SaveNote", Note);
         Close?.Invoke();
     }
