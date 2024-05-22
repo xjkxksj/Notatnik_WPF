@@ -3,11 +3,65 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Notatnik_WPF"
+             xmlns:local="clr-namespace:Notatnik_WPF" xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <StackPanel>
-        <TextBlock Text="{Binding Title}" FontSize="20" FontWeight="Bold"/>
-        <TextBlock Text="{Binding Content}" FontSize="20" FontWeight="Bold"/>
-    </StackPanel>
+
+    <Grid>
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="MouseLeftButtonDown">
+                <i:InvokeCommandAction Command="{Binding OpenNote}" />
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
+   
+        <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="5" Padding="10" Margin="5" Cursor="Hand">
+            <Border.Background>
+                <SolidColorBrush x:Name="borderBrush" Color="White"/>
+            </Border.Background>
+            <Border.Triggers>
+                <EventTrigger RoutedEvent="MouseEnter">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <ColorAnimation Storyboard.TargetName="borderBrush" Storyboard.TargetProperty="Color" To="LightGray" Duration="0:0:0.3"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+                <EventTrigger RoutedEvent="MouseLeave">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <ColorAnimation Storyboard.TargetName="borderBrush" Storyboard.TargetProperty="Color" To="White" Duration="0:0:0.3"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Border.Triggers>
+
+
+            <StackPanel>
+                <TextBlock Text="{Binding Title}" FontSize="20" FontWeight="Bold" Margin="0,0,0,5"/>
+                <TextBlock Text="{Binding Content}" FontSize="14" TextTrimming="CharacterEllipsis" MaxHeight="40">
+                    <TextBlock.ToolTip>
+                        <ToolTip>
+                            <TextBlock Text="{Binding Content}"/>
+                        </ToolTip>
+                    </TextBlock.ToolTip>
+                </TextBlock>
+            </StackPanel>
+        </Border>
+        <Button Command="{Binding DeleteNote}" Width="Auto" HorizontalAlignment="Right" VerticalAlignment="Top" Cursor="Hand">
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border" Background="Red" BorderBrush="Black" BorderThickness="1" CornerRadius="10" Height="20" Width="20" Padding="2">
+                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,-3,0,0">x</TextBlock>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="DarkRed"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+    </Grid>
+
+
 </UserControl>

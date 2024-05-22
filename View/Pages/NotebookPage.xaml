@@ -42,7 +42,7 @@
 
 
                 <ScrollViewer>
-    
+
                     <ItemsControl ItemsSource="{Binding Notes}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>

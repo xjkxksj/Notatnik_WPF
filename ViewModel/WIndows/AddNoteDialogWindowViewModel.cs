@@ -25,6 +25,14 @@ internal class AddNoteDialogWindowViewModel : BaseViewModel, ICloseWindows
         Categories = new ObservableCollection<Category>(categories);
         AddNoteCommand = new RelayCommand(AddNote);
     }
+
+    public AddNoteDialogWindowViewModel(List<Category> categories, Note note) : this(categories)
+    {
+        Title = note.Title;
+        Content = note.Content;
+        SelectedCategoryId = Categories.IndexOf(note.Categories.First());
+    }
+
     private void AddNote()
     {
         Note = new Note { Title = Title, Content = Content, EditTime = DateTime.Now };
