@@ -9,9 +9,9 @@ namespace Notatnik_WPF;
 internal class Repository
 {
     public static Repository Instance { get; } = new Repository();
-    public ObservableCollection<Note> Notes { get; set; } = new ObservableCollection<Note>();
-    public ObservableCollection<Category> Categories { get; set; } = new ObservableCollection<Category>();
-    public ObservableCollection<Tag> Tags { get; set; }  = new ObservableCollection<Tag>();
+    public List<Note> Notes { get; set; } = new List<Note>();
+    public List<Category> Categories { get; set; } = new List<Category>();
+    public List<Tag> Tags { get; set; }  = new List<Tag>();
 
     public void loadFromFile(string fileName)
     {

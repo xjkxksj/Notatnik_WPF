@@ -23,17 +23,19 @@
             <ColumnDefinition Width="4*"/>
         </Grid.ColumnDefinitions>
         <Label Margin="3">Nazwa:</Label>
-        <TextBox Margin="3" Grid.Column="1" Name="nazwa" MaxHeight="28"/>
+        <TextBox Margin="3" Grid.Column="1" Name="nazwa" MaxHeight="28" Text="{Binding Title}"/>
         <Label Margin="3" Grid.Row="1">Treść:</Label>
         <TextBox Margin="3" Grid.Row="1" Grid.Column="1" Name="tresc" 
                  TextWrapping="Wrap"
                  AcceptsReturn="True"
-                 VerticalScrollBarVisibility="Visible"/>
+                 VerticalScrollBarVisibility="Visible"
+                 Text="{Binding Content}"/>
         <Label Margin="3" Grid.Row="2">Kategoria:</Label>
-        <ComboBox Margin="3" Grid.Row="2" Grid.Column="1" Name="kategoria" MaxHeight="28" ItemsSource="{Binding Repository.Categories}"
+        <ComboBox Margin="3" Grid.Row="2" Grid.Column="1" Name="kategoria" MaxHeight="28" ItemsSource="{Binding Categories}"
                   DisplayMemberPath="Name"
                   SelectedValuePath="Id"
-                  SelectedIndex="0">
+                  SelectedIndex="0"
+                  SelectedValue="{Binding SelectedCategoryId}">
         </ComboBox>
         <Label Margin="3" Grid.Row="3">Tagi:</Label>
         

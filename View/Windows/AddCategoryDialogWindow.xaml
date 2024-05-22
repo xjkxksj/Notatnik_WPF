@@ -20,7 +20,7 @@
             <ColumnDefinition Width="4*"/>
         </Grid.ColumnDefinitions>
         <Label Margin="3">Nazwa:</Label>
-        <TextBox Margin="3" Grid.Column="1" Name="nazwa" Height="28"/>
+        <TextBox Margin="3" Grid.Column="1" Name="nazwa" Height="28" Text="{Binding Category}" />
         <StackPanel Orientation="Horizontal" Grid.Row="4"
                 Grid.ColumnSpan="2" HorizontalAlignment="Right"
                 Height="48">

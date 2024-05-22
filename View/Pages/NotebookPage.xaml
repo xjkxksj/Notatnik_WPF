@@ -43,7 +43,7 @@
 
                 <ScrollViewer>
     
-                    <ItemsControl ItemsSource="{Binding Repository.Notes}">
+                    <ItemsControl ItemsSource="{Binding Notes}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <local:NoteItem/>

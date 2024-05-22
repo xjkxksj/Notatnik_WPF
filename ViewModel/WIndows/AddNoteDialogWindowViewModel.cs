@@ -11,18 +11,23 @@ using System.Windows.Input;
 namespace Notatnik_WPF;
 internal class AddNoteDialogWindowViewModel : BaseViewModel, ICloseWindows
 {
-    public Repository Repository { get; set; } = Repository.Instance;
+    public ObservableCollection<Category> Categories { get; set; }
+    public string Title { get; set; }
+    public string Content { get; set; }
+    public int SelectedCategoryId { get; set; }
+    public Note Note;
 
     public ICommand AddNoteCommand { get; set; }
     public Action Close { get; set; }
 
-    public AddNoteDialogWindowViewModel()
+    public AddNoteDialogWindowViewModel(List<Category> categories)
     {
+        Categories = new ObservableCollection<Category>(categories);
         AddNoteCommand = new RelayCommand(AddNote);
     }
     private void AddNote()
     {
-        Repository.Notes.Add(new Note { Title = "New Note", Content = "New Content", EditTime = DateTime.Now });
+        Note = new Note { Title = Title, Content = Content, EditTime = DateTime.Now };
         Close?.Invoke();
     }
 
