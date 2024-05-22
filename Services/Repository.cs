@@ -109,19 +109,6 @@ internal class Repository
     //    }
 
     //}
-    public Repository()
-    {
-        //Dummy data
-        Categories.Add(new Category { Name = "Category1" });
-        Categories.Add(new Category { Name = "Category2" });
-        Categories.Add(new Category { Name = "Category3" });
-        Tags.Add(new Tag { Name = "Tag1" });
-        Tags.Add(new Tag { Name = "Tag2" });
-        Tags.Add(new Tag { Name = "Tag3" });
-        Notes.Add(new Note { Title = "Note1", Content = "Content1", EditTime = DateTime.Now });
-        Notes.Add(new Note { Title = "Note2", Content = "Content2", EditTime = DateTime.Now });
-        Notes.Add(new Note { Title = "Note3", Content = "Content3", EditTime = DateTime.Now });
-    }
 
 
 
