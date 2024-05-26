@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Windows.Input;
 
 
@@ -8,13 +9,19 @@ namespace Notatnik_WPF
     {
         public ObservableCollection<Category> Categories { get; set; } = new ObservableCollection<Category>();
         public ICommand OpenAddCategoryCommand { get; set; }
+        public ICommand DeleteCategoryCommand { get; set; }
 
         public SearchFiltersViewModel()
         {
             OpenAddCategoryCommand = new RelayCommand(OpenAddCategory);
+            DeleteCategoryCommand = new RelayCommand(DeleteCategory);
             Messenger.Subscribe<List<Category>>("CategoryChanged", CategoryChanged);
         }
-
+        private void DeleteCategory(object catObject)
+        {
+            Category category = catObject as Category;
+            Messenger.Send("CategoryDeleted", category);
+        }
         private void CategoryChanged(List<Category> categories)
         {
             Categories.Clear();

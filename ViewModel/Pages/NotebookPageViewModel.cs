@@ -23,6 +23,7 @@ internal class NotebookPageViewModel
     public ICollectionView FilteredNotes { get; set; }
     public ICommand AddNoteCommand { get; set; }
 
+
     public NotebookPageViewModel()
     {
 
@@ -37,23 +38,59 @@ internal class NotebookPageViewModel
         }
 
         FilteredNotes = CollectionViewSource.GetDefaultView(Notes);
-        FilteredNotes.Filter = YourFilterMethod;
+        FilteredNotes.Filter = (_) => true;
 
         Messenger.Subscribe<string>("CreateCategory", CreateCategory);
         Messenger.Subscribe<string>("OpenNote", OpenNote);
         Messenger.Subscribe<string>("DeleteNote", DeleteNote);
         Messenger.Subscribe<Note>("SaveNote", SaveNote);
+        Messenger.Subscribe<FilterValues>("SetFilters", SetFilters);
+        Messenger.Subscribe<Category>("CategoryDeleted", DeleteCategory);
         Messenger.Send("CategoryChanged", repository.Categories);
 
 
     }
-    private bool YourFilterMethod(object item)
-    {
-        return true;
-        NoteItemViewModel note = item as NoteItemViewModel;
 
-        // Add your filter logic here. This is just an example.
-        return note != null && note.Title.Contains("TEST");
+    private void SetFilters(FilterValues filterValues)
+    {
+        FilteredNotes.Filter = (note) =>
+        {
+            NoteItemViewModel noteViewModel = note as NoteItemViewModel;
+            if (noteViewModel != null)
+            {
+                if (noteViewModel.EditDate < filterValues.FromDate)
+                    return false;
+                if (noteViewModel.EditDate > filterValues.ToDate)
+                    return false;
+                if (noteViewModel.Category != filterValues.Category)
+                    return false;
+                foreach (var tag in filterValues.Tags)
+                {
+                    if (!noteViewModel.Tags.Contains(tag))
+                        return false;
+                }
+            }
+            return true;
+        };
+    }
+
+    private void SetDateSorting(SortingType sorting)
+    {
+        FilteredNotes.SortDescriptions.Clear();
+        switch (sorting)
+        {
+            case SortingType.None:
+                break;
+            case SortingType.Ascending:
+                FilteredNotes.SortDescriptions.Clear();
+                FilteredNotes.SortDescriptions.Add(new SortDescription("EditDate", ListSortDirection.Ascending));
+                break;
+            case SortingType.Descending:
+                FilteredNotes.SortDescriptions.Clear();
+                FilteredNotes.SortDescriptions.Add(new SortDescription("EditDate", ListSortDirection.Descending));
+                break;
+        }
+
     }
     private void DeleteNote(string title)
     {
@@ -74,8 +111,8 @@ internal class NotebookPageViewModel
         openedNote = vm;
         repository.Notes.Remove(note);
 
-        AddNoteDialogWindowViewModel addNoteVM = new AddNoteDialogWindowViewModel(repository.Categories, note);
-        AddNoteDialogWindow addNoteView = new AddNoteDialogWindow();
+        NoteDialogWindowViewModel addNoteVM = new NoteDialogWindowViewModel(repository.Categories, note);
+        NoteDialogWindow addNoteView = new NoteDialogWindow();
 
         addNoteView.DataContext = addNoteVM;
         addNoteView.ShowDialog();
@@ -90,8 +127,8 @@ internal class NotebookPageViewModel
     }
     private void AddNote()
     {
-        AddNoteDialogWindowViewModel addNoteVM = new AddNoteDialogWindowViewModel(repository.Categories);
-        AddNoteDialogWindow addNoteView = new AddNoteDialogWindow();
+        NoteDialogWindowViewModel addNoteVM = new NoteDialogWindowViewModel(repository.Categories);
+        NoteDialogWindow addNoteView = new NoteDialogWindow();
 
         addNoteView.DataContext = addNoteVM;
         addNoteView.ShowDialog();
@@ -114,6 +151,12 @@ internal class NotebookPageViewModel
         Notes.Add(new NoteItemViewModel(note));
 
         FilteredNotes.Refresh();
+    }
+
+    private void DeleteCategory(Category category)
+    {
+        repository.Categories.Remove(category);
+        Messenger.Send("CategoryChanged", repository.Categories);
     }
 
 

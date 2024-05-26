@@ -6,12 +6,17 @@ using System.Text;
 using System.Threading.Channels;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace Notatnik_WPF;
-internal class AddNoteDialogWindowViewModel : BaseViewModel, ICloseWindows
+
+internal class NoteDialogWindowViewModel : BaseViewModel, ICloseWindows
 {
     public ObservableCollection<Category> Categories { get; set; }
+
+
+
     public string Title { get; set; }
     public string Content { get; set; }
     public Category SelectedCategory { get; set; }
@@ -20,15 +25,16 @@ internal class AddNoteDialogWindowViewModel : BaseViewModel, ICloseWindows
     public ICommand AddNoteCommand { get; set; }
     public Action Close { get; set; }
 
-    public AddNoteDialogWindowViewModel(List<Category> categories)
+    public NoteDialogWindowViewModel(List<Category> categories)
     {
         Categories = new ObservableCollection<Category>(categories);
+
         AddNoteCommand = new RelayCommand(AddNote);
-        if(categories.Count > 0)
+        if (categories.Count > 0)
             SelectedCategory = categories[0];
     }
 
-    public AddNoteDialogWindowViewModel(List<Category> categories, Note note) : this(categories)
+    public NoteDialogWindowViewModel(List<Category> categories, Note note) : this(categories)
     {
         Title = note.Title;
         Content = note.Content;
@@ -37,8 +43,10 @@ internal class AddNoteDialogWindowViewModel : BaseViewModel, ICloseWindows
 
     private void AddNote()
     {
-        Note = new Note { Title = Title, Content = Content, EditTime = DateTime.Now , Category = SelectedCategory };
+        Note = new Note { Title = Title, Content = Content, EditTime = DateTime.Now, Category = SelectedCategory };
         Messenger.Send("SaveNote", Note);
+
+
         Close?.Invoke();
     }
 
@@ -46,4 +54,7 @@ internal class AddNoteDialogWindowViewModel : BaseViewModel, ICloseWindows
     {
         return true;
     }
+
+
+
 }

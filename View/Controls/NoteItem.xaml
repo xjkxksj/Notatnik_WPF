@@ -8,13 +8,17 @@
              d:DesignHeight="450" d:DesignWidth="800">
 
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="8*" />
+            <ColumnDefinition Width="2*" />
+        </Grid.ColumnDefinitions>
         <i:Interaction.Triggers>
             <i:EventTrigger EventName="MouseLeftButtonDown">
                 <i:InvokeCommandAction Command="{Binding OpenNoteCommand}" />
             </i:EventTrigger>
         </i:Interaction.Triggers>
-   
-        <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="5" Padding="10" Margin="5" Cursor="Hand">
+
+        <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="5" Padding="10" Margin="5" Cursor="Hand" Grid.ColumnSpan="2" Grid.Column="0">
             <Border.Background>
                 <SolidColorBrush x:Name="borderBrush" Color="White"/>
             </Border.Background>
@@ -36,7 +40,7 @@
             </Border.Triggers>
 
 
-            <StackPanel>
+            <StackPanel Grid.Column="0">
                 <TextBlock Text="{Binding Title}" FontSize="20" FontWeight="Bold" Margin="0,0,0,5"/>
                 <TextBlock Text="{Binding Content}" FontSize="14" TextTrimming="CharacterEllipsis" MaxHeight="40">
                     <TextBlock.ToolTip>
@@ -45,9 +49,28 @@
                         </ToolTip>
                     </TextBlock.ToolTip>
                 </TextBlock>
+                <StackPanel Orientation="Horizontal">
+                    <ItemsControl ItemsSource="{Binding VisibleTags}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="5" Margin="2">
+                                    <TextBlock Text="{Binding Name, StringFormat=\#{0}}" Padding="1" TextTrimming="CharacterEllipsis" MaxWidth="50"/>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="5" Margin="2">
+                        <TextBlock Text=" ... " Visibility="{Binding AreMoreTags}" />
+                    </Border>
+                </StackPanel>
             </StackPanel>
         </Border>
-        <Button Command="{Binding DeleteNoteCommand}" Width="Auto" HorizontalAlignment="Right" VerticalAlignment="Top" Cursor="Hand">
+        <Button Command="{Binding DeleteNoteCommand}" Width="Auto" HorizontalAlignment="Right" VerticalAlignment="Top" Cursor="Hand" Grid.Column="1">
             <Button.Template>
                 <ControlTemplate TargetType="Button">
                     <Border x:Name="border" Background="Red" BorderBrush="Black" BorderThickness="1" CornerRadius="10" Height="20" Width="20" Padding="2">
@@ -61,6 +84,16 @@
                 </ControlTemplate>
             </Button.Template>
         </Button>
+        <StackPanel IsHitTestVisible="False" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Column="1">
+            <Border BorderBrush="LightCoral" BorderThickness="1" CornerRadius="5" Margin="10" >
+                <TextBlock  Text="{Binding Category.Name}"  Padding="1"/>
+            </Border>
+            <Border BorderBrush="LightBlue" BorderThickness="1" CornerRadius="5" Margin="10">
+                <TextBlock  Text="{Binding EditDate, StringFormat={}{0: dd mm yy}}"  Padding="1"/>
+            </Border>
+        </StackPanel>
+
+
     </Grid>
 
 

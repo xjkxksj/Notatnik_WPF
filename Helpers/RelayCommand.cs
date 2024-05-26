@@ -10,12 +10,16 @@ namespace Notatnik_WPF;
 internal class RelayCommand : ICommand
 {
     private Action mAction;
-
-    
+    private Action<object> pAction;
 
     public RelayCommand(Action action)
     {
         mAction = action;
+    }
+
+    public RelayCommand(Action<object> pAction)
+    {
+        this.pAction = pAction;
     }
 
     public event EventHandler? CanExecuteChanged;
@@ -27,6 +31,10 @@ internal class RelayCommand : ICommand
 
     public void Execute(object? parameter)
     {
-        mAction();
+        if(parameter == null)
+            mAction();
+        else
+            pAction(parameter);
+
     }
 }

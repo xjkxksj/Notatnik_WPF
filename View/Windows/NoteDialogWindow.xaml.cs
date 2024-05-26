@@ -13,16 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Notatnik_WPF
+namespace Notatnik_WPF;
+
+/// <summary>
+/// Logika interakcji dla klasy ItemDialogPage.xaml
+/// </summary>
+public partial class NoteDialogWindow : Window
 {
-    /// <summary>
-    /// Logika interakcji dla klasy ItemDialogPage.xaml
-    /// </summary>
-    public partial class AddNoteDialogWindow : Window
+    public NoteDialogWindow()
     {
-        public AddNoteDialogWindow()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
+
     }
 }

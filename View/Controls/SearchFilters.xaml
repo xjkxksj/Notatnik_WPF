@@ -26,18 +26,30 @@
             <DatePicker x:Name="datePicker2" DisplayDateStart="1900-01-01" SelectedDate="{x:Null}" Text="From" />
         </StackPanel>
         <TextBlock HorizontalAlignment="Center" Text="Category " FontSize="15"></TextBlock>
-        <ComboBox Width="auto" ItemsSource="{Binding Categories}">
-            <ComboBox.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding Name}" />
-                </DataTemplate>
-            </ComboBox.ItemTemplate>
-        </ComboBox>
-        <Button Content="Add Category" Style="{DynamicResource RoundButton}" Command="{Binding OpenAddCategoryCommand}" />
-        <WrapPanel HorizontalAlignment="Center" Orientation="Vertical">
-            <CheckBox Content="Tag1" Margin="10" />
-            <CheckBox Content="Tag2" Margin="10" />
-            <CheckBox Content="Tag3" Margin="10" />
-        </WrapPanel>
+        <StackPanel Orientation="Horizontal" Width="200" >
+            <ComboBox Width="150" ItemsSource="{Binding Categories}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Width="190">
+                            <TextBlock Text="{Binding Name}" HorizontalAlignment="Left" MaxWidth="150" TextTrimming="CharacterEllipsis"/>
+                            <Button Command="{Binding DataContext.DeleteCategoryCommand , RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                                CommandParameter="{Binding}" 
+                                Style="{DynamicResource RoundButton}" 
+                                HorizontalAlignment="Right">
+                                <TextBlock>-</TextBlock>
+                            </Button>
+                        </Grid>
+
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <Button Style="{DynamicResource RoundButton}" Command="{Binding OpenAddCategoryCommand}" Width="30">
+                <TextBlock>+</TextBlock></Button>
+        </StackPanel>
+      
+
+        <TextBox Margin="20 0" MaxWidth="180" Height="50" Text="#Tag1 #Tag2 #Tag3">
+            
+        </TextBox>
     </StackPanel>
 </UserControl>

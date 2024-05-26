@@ -19,5 +19,14 @@ public partial class NoteItem : UserControl
     public NoteItem()
     {
         InitializeComponent();
+
+        this.SizeChanged += NoteItem_SizeChanged;
+    }
+
+    private void NoteItem_SizeChanged(object sender, SizeChangedEventArgs e)
+    {
+        var viewModel = this.DataContext as NoteItemViewModel;
+
+        viewModel?.UpdateVisibleTags(e.NewSize.Width);
     }
 }
