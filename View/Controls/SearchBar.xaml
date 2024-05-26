@@ -9,18 +9,11 @@
 
     <Border CornerRadius="20" BorderBrush="Black" Background="Snow" MaxHeight="60" MinHeight="40" MinWidth="500">
 
-        <Grid HorizontalAlignment="Stretch">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="4*" />
-                <ColumnDefinition Width="1*" />
-            </Grid.ColumnDefinitions>
+ 
+            <TextBox Margin="20,0,20,0" FontSize="28" Height="50" TextWrapping="NoWrap" 
+                     Grid.Column="0" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" />
 
-            <TextBox Margin="20,0,0,0" FontSize="28" Height="50" TextWrapping="NoWrap" 
-                     Grid.Column="0" />
 
-            <Button Content="Szukaj" FontSize="20" Width="100" Style="{DynamicResource RoundButton}" 
-                    Grid.Column="1"/>
-        </Grid>
     </Border>
 
 </UserControl>

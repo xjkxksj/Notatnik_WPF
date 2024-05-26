@@ -56,20 +56,47 @@ internal class NotebookPageViewModel
         FilteredNotes.Filter = (note) =>
         {
             NoteItemViewModel noteViewModel = note as NoteItemViewModel;
-            if (noteViewModel != null)
+            if (noteViewModel == null)
             {
-                if (noteViewModel.EditDate < filterValues.FromDate)
+                return true;
+            }
+
+            if (filterValues.FromDate != null && noteViewModel.EditDate < filterValues.FromDate)
+            {
+                return false;
+            }
+
+            if (filterValues.ToDate != null && noteViewModel.EditDate > filterValues.ToDate)
+            {
+                return false;
+            }
+
+            if (filterValues.Category != null && (noteViewModel.Category == null || noteViewModel.Category.Name != filterValues.Category.Name))
+            {
+                return false;
+            }
+
+            if (filterValues.SearchText != null && (noteViewModel.Title == null || !noteViewModel.Title.Contains(filterValues.SearchText)))
+            {
+                return false;
+            }
+
+            if (filterValues.Tags != null && filterValues.Tags.Count > 0)
+            {
+                if (noteViewModel.Tags == null)
+                {
                     return false;
-                if (noteViewModel.EditDate > filterValues.ToDate)
-                    return false;
-                if (noteViewModel.Category != filterValues.Category)
-                    return false;
+                }
+
                 foreach (var tag in filterValues.Tags)
                 {
-                    if (!noteViewModel.Tags.Contains(tag))
+                    if (!noteViewModel.Tags.Any(t => t.Name.Contains(tag.Name)))
+                    {
                         return false;
+                    }
                 }
             }
+
             return true;
         };
     }

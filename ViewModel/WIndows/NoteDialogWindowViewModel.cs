@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Channels;
 using System.Threading.Tasks;
 using System.Windows;
@@ -15,7 +16,36 @@ internal class NoteDialogWindowViewModel : BaseViewModel, ICloseWindows
 {
     public ObservableCollection<Category> Categories { get; set; }
 
+    List<Tag> Tags;
+    private string tagsText;
+    public string TagsText
+    {
+        get { return tagsText; }
+        set
+        {
+            string cleanedInput = Regex.Replace(value, "[ ,;.$%^*()]+", " ");
+            string[] parts = cleanedInput.Split(' ');
 
+            // Remove duplicates
+            parts = parts.Distinct().ToArray();
+
+            for (int i = 0; i < parts.Length; i++)
+            {
+                if (parts[i].Length > 0 && !parts[i].StartsWith("#"))
+                    parts[i] = "#" + parts[i];
+            }
+
+            string output = string.Join(" ", parts);
+
+            Tags = new List<Tag>();
+            foreach (var tag in parts)
+            {
+                Tags.Add(new Tag() { Name = tag });
+            }
+
+            tagsText = output;
+        }
+    }
 
     public string Title { get; set; }
     public string Content { get; set; }
@@ -43,7 +73,7 @@ internal class NoteDialogWindowViewModel : BaseViewModel, ICloseWindows
 
     private void AddNote()
     {
-        Note = new Note { Title = Title, Content = Content, EditTime = DateTime.Now, Category = SelectedCategory };
+        Note = new Note { Title = Title, Content = Content, EditTime = DateTime.Now, Category = SelectedCategory, Tags = Tags };
         Messenger.Send("SaveNote", Note);
 
 

@@ -20,6 +20,7 @@ public partial class SearchBar : UserControl
     {
         InitializeComponent();
 
+        DataContext = new SearchBarViewModel();
 
     }
 }

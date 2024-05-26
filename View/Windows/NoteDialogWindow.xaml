@@ -10,15 +10,6 @@
       SizeToContent="Width"
       Title="NoteDialogWindow">
 
-    <Window.Resources>
-        <DataTemplate x:Key="TokenTemplate">
-            <Border BorderBrush="#FF7E7E7E" BorderThickness="1" CornerRadius="5" >
-                <TextBlock Text="{Binding}" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" FontSize="10" Padding="2"/>
-            </Border>
-        </DataTemplate>
-    </Window.Resources>
-    
-
     <Grid Background="#d7d9ce">
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
@@ -47,7 +38,7 @@
         </ComboBox>
         <Label Margin="3" Grid.Row="3">Tagi:</Label>
         <Grid Grid.Row="3" Grid.Column="1">
-            <TextBox></TextBox>
+            <TextBox Text="{Binding TagsText ,UpdateSourceTrigger=PropertyChanged}"></TextBox>
 
         </Grid>
 

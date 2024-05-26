@@ -19,15 +19,15 @@
             />
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
             <TextBlock Text="From " FontSize="15"></TextBlock>
-            <DatePicker x:Name="datePicker" DisplayDateStart="1900-01-01" SelectedDate="{x:Null}" Text="From" />
+            <DatePicker x:Name="datePicker" DisplayDateStart="1900-01-01" Text="From" SelectedDate="{Binding FromDate}" />
         </StackPanel>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
             <TextBlock Text="To " FontSize="15"></TextBlock>
-            <DatePicker x:Name="datePicker2" DisplayDateStart="1900-01-01" SelectedDate="{x:Null}" Text="From" />
+            <DatePicker x:Name="datePicker2" DisplayDateStart="1900-01-01" SelectedDate="{Binding ToDate}" Text="From" />
         </StackPanel>
         <TextBlock HorizontalAlignment="Center" Text="Category " FontSize="15"></TextBlock>
         <StackPanel Orientation="Horizontal" Width="200" >
-            <ComboBox Width="150" ItemsSource="{Binding Categories}">
+            <ComboBox Width="150" ItemsSource="{Binding Categories}" SelectedItem="{Binding SelectedCategory}">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <Grid Width="190">
@@ -46,10 +46,9 @@
             <Button Style="{DynamicResource RoundButton}" Command="{Binding OpenAddCategoryCommand}" Width="30">
                 <TextBlock>+</TextBlock></Button>
         </StackPanel>
-      
 
-        <TextBox Margin="20 0" MaxWidth="180" Height="50" Text="#Tag1 #Tag2 #Tag3">
-            
-        </TextBox>
+
+        <TextBox Margin="20 0" MaxWidth="180" Height="50" Text="{Binding Tags, UpdateSourceTrigger=PropertyChanged}"/>
+
     </StackPanel>
 </UserControl>

@@ -8,11 +8,11 @@ using System.Windows.Input;
 namespace Notatnik_WPF;
 internal class NoteItemViewModel : BaseViewModel
 {
-    public string Title { get; set; }
+    public string Title { get; set; } = "";
     public string Content { get; set; }
     public DateTime EditDate { get; set; }
     public Category Category { get; set; }
-    public List<Tag> Tags { get; set; }
+    public List<Tag> Tags { get; set; } = new List<Tag>();
     public ICommand OpenNoteCommand { get; set; }
     public ICommand DeleteNoteCommand { get; set; }
     public NoteItemViewModel(Note note)
@@ -20,13 +20,8 @@ internal class NoteItemViewModel : BaseViewModel
         Title = note.Title;
         Content = note.Content;
         Category = note.Category;
-        Tags = new List<Tag>();
-
-        //Dummy Tags
-        for (int i = 0; i < 15; i++)
-        {
-            Tags.Add(new Tag() { Name = $"Tag{i}"});
-        }
+        Tags = note.Tags;
+        EditDate = note.EditTime;
 
         OpenNoteCommand = new RelayCommand(OpenNote);
         DeleteNoteCommand = new RelayCommand(DeleteNote);
@@ -35,15 +30,17 @@ internal class NoteItemViewModel : BaseViewModel
 
     public bool AreMoreTags
     {
-        get { return Tags.Count > VisibleTags.Count; }
+        get { return Tags != null && Tags.Count > VisibleTags.Count; }
     }
 
     public void UpdateVisibleTags(double availableWidth)
     {
         double tagWidth = 70;
         int maxTags = (int)(availableWidth / tagWidth);
+        
+        if(Tags != null)
+            VisibleTags = Tags.Take(maxTags).ToList();
 
-        VisibleTags = Tags.Take(maxTags).ToList();
     }
 
     void OpenNote()

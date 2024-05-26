@@ -1,25 +1,22 @@
 ﻿using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Windows.Input;
 
 namespace Notatnik_WPF;
 
 public class SearchBarViewModel : BaseViewModel
 {
-
-    public string SearchText { get; set; } = string.Empty;
-    public ICommand SearchCommand { get; set; }
-    public ICommand ClearCommand { get; set; }
-
-
-
-    void Search()
+    private string searchText;
+    public string SearchText
     {
-        
+        get { return searchText; }
+        set
+        {
+            searchText = value;
+            Messenger.Send<string>("ChangeSearch", searchText);
+        }
     }
-    void Clear()
-    {
-        SearchText = string.Empty;
-        OnPropertyChanged(nameof(SearchText));
-    }
+
+
 }

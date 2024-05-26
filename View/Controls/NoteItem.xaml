@@ -59,7 +59,7 @@
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="5" Margin="2">
-                                    <TextBlock Text="{Binding Name, StringFormat=\#{0}}" Padding="1" TextTrimming="CharacterEllipsis" MaxWidth="50"/>
+                                    <TextBlock Text="{Binding Name}" Padding="1" TextTrimming="CharacterEllipsis" MaxWidth="50"/>
                                 </Border>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
