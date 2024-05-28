@@ -22,6 +22,17 @@ internal class NotebookPageViewModel
 
     public ICollectionView FilteredNotes { get; set; }
     public ICommand AddNoteCommand { get; set; }
+    public Array SortingTypes { get; set; } = Enum.GetValues(typeof(SortingType));
+    private SortingType selectedSortingType;
+    public SortingType SelectedSortingType
+    {
+        get { return selectedSortingType; }
+        set
+        {
+            selectedSortingType = value;
+            SetDateSorting(value);
+        }
+    }
 
 
     public NotebookPageViewModel()

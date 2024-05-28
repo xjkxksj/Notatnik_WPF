@@ -19,13 +19,13 @@
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="4*"/>
         </Grid.ColumnDefinitions>
-        <Label Margin="3">Nazwa:</Label>
-        <TextBox Margin="3" Grid.Column="1" Name="nazwa" Height="28" Text="{Binding Category}" />
+        <Label Target="Name" Margin="3">_Name:</Label>
+        <TextBox Margin="3" Grid.Column="1" Name="Name" Height="28" Text="{Binding Category}" />
         <StackPanel Orientation="Horizontal" Grid.Row="4"
                 Grid.ColumnSpan="2" HorizontalAlignment="Right"
                 Height="48">
-            <Button IsDefault="True" Style="{DynamicResource RoundButton}" Command="{Binding AddCategoryToRepositoryCommand}" >OK</Button>
-            <Button IsCancel="True" Style="{DynamicResource RoundButton}">Anuluj</Button>
+            <Button IsDefault="True" Style="{DynamicResource OkButton}" Command="{Binding AddCategoryToRepositoryCommand}" >O_K</Button>
+            <Button IsCancel="True" Style="{DynamicResource CancelButton}">C_ancel</Button>
         </StackPanel>
     </Grid>
 </Window>

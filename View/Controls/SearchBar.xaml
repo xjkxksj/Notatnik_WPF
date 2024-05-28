@@ -8,11 +8,15 @@
              d:DesignHeight="450" d:DesignWidth="800">
 
     <Border CornerRadius="20" BorderBrush="Black" Background="Snow" MaxHeight="60" MinHeight="40" MinWidth="500">
-
- 
-            <TextBox Margin="20,0,20,0" FontSize="28" Height="50" TextWrapping="NoWrap" 
-                     Grid.Column="0" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" />
-
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="5*" />
+            </Grid.ColumnDefinitions>
+            <Label Target="SearchBox" FontSize="17" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,0,0" Grid.Column="0">_Search:</Label>
+            <TextBox Name="SearchBox" Margin="20,0,20,0" FontSize="28" Height="50" TextWrapping="NoWrap" 
+                     Grid.Column="1" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" />
+        </Grid>
 
     </Border>
 

@@ -19,17 +19,21 @@
         </Grid.RowDefinitions>
 
         <TextBlock Grid.Column="0" Grid.Row="0" Text="Notebook" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <StackPanel Grid.Column="0" Grid.Row="1">
-            <Button Content="Add Note" Style="{DynamicResource RoundButton}" Command="{Binding AddNoteCommand}" />
-            <Expander Name="FiltersExpander" HorizontalAlignment="Left"
-                  Header="Filters" 
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Grid.Row="1">
+            <StackPanel>
+                <Button Style="{DynamicResource OkButton}" Command="{Binding AddNoteCommand}">Add _Note</Button>
+                <Label Target="SortTypes">Sort _date:</Label>
+                <ComboBox Name="SortTypes" Margin="5 0 5 0" ItemsSource="{Binding SortingTypes}" SelectedItem="{Binding SelectedSortingType}"/>
+                <Expander Name="FiltersExpander" HorizontalAlignment="Left"
+                  Header="_Filters" 
                   ExpandDirection="Down" IsExpanded="True">
 
-                <local:SearchFilters />
-            </Expander>
-        </StackPanel>
+                    <local:SearchFilters />
+                </Expander>
+            </StackPanel>
+        </ScrollViewer>
 
-        
+
         <local:SearchBar Grid.Column="1" Grid.Row="0" Margin="10,5,10,10"/>
 
 
@@ -42,7 +46,7 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <TextBlock Text="Notatnik" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0"/>
+                <TextBlock Text="Notes" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0"/>
                 <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Grid.Row="1">
                     <ItemsControl ItemsSource="{Binding FilteredNotes}">
                         <ItemsControl.ItemTemplate>

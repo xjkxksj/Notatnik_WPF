@@ -22,31 +22,31 @@
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="4*"/>
         </Grid.ColumnDefinitions>
-        <Label Margin="3">Nazwa:</Label>
-        <TextBox Margin="3" Grid.Column="1" Name="nazwa" MaxHeight="28" Text="{Binding Title}"/>
-        <Label Margin="3" Grid.Row="1">Treść:</Label>
-        <TextBox Margin="3" Grid.Row="1" Grid.Column="1" Name="tresc" 
+        <Label Target="Name" Margin="3">_Name:</Label>
+        <TextBox Margin="3" Grid.Column="1" Name="Name" MaxHeight="28" Text="{Binding Title}"/>
+        <Label Target="Content" Margin="3" Grid.Row="1">C_ontent:</Label>
+        <TextBox Margin="3" Grid.Row="1" Grid.Column="1" Name="Content" 
                  TextWrapping="Wrap"
                  AcceptsReturn="True"
                  VerticalScrollBarVisibility="Visible"
                  Text="{Binding Content}"/>
-        <Label Margin="3" Grid.Row="2">Kategoria:</Label>
-        <ComboBox Margin="3" Grid.Row="2" Grid.Column="1" Name="kategoria" MaxHeight="28" ItemsSource="{Binding Categories}"
+        <Label Target="Category" Margin="3" Grid.Row="2">_Category:</Label>
+        <ComboBox Margin="3" Grid.Row="2" Grid.Column="1" Name="Category" MaxHeight="28" ItemsSource="{Binding Categories}"
                   DisplayMemberPath="Name"
                   SelectedIndex="0"
                   SelectedValue="{Binding SelectedCategory, Mode=TwoWay}">
         </ComboBox>
-        <Label Margin="3" Grid.Row="3">Tagi:</Label>
+        <Label Target="Tags" Margin="3" Grid.Row="3">_Tags:</Label>
         <Grid Grid.Row="3" Grid.Column="1">
-            <TextBox Text="{Binding TagsText ,UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <TextBox Name="Tags" Text="{Binding TagsText ,UpdateSourceTrigger=PropertyChanged}"></TextBox>
 
         </Grid>
 
         <StackPanel Orientation="Horizontal" Grid.Row="4"
                     Grid.ColumnSpan="2" HorizontalAlignment="Right"
                     MaxHeight="48">
-            <Button IsDefault="True" Style="{DynamicResource RoundButton}" Command="{Binding AddNoteCommand}" >OK</Button>
-            <Button IsCancel="True" Style="{DynamicResource RoundButton}">Anuluj</Button>
+            <Button IsDefault="True" Style="{DynamicResource OkButton}" Command="{Binding AddNoteCommand}">O_K</Button>
+            <Button IsCancel="True" Style="{DynamicResource CancelButton}">C_ancel</Button>
         </StackPanel>
     </Grid>
 </Window>
