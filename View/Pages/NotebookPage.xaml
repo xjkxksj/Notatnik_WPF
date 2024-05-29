@@ -22,7 +22,7 @@
         <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Grid.Row="1">
             <StackPanel>
                 <Button Style="{DynamicResource OkButton}" Command="{Binding AddNoteCommand}">Add _Note</Button>
-                <Label Target="SortTypes">Sort _date:</Label>
+                <Label Target="SortTypes">Sort _by:</Label>
                 <ComboBox Name="SortTypes" Margin="5 0 5 0" ItemsSource="{Binding SortingTypes}" SelectedItem="{Binding SelectedSortingType}"/>
                 <Expander Name="FiltersExpander" HorizontalAlignment="Left"
                   Header="_Filters" 

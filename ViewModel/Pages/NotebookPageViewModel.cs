@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
@@ -22,15 +23,30 @@ internal class NotebookPageViewModel
 
     public ICollectionView FilteredNotes { get; set; }
     public ICommand AddNoteCommand { get; set; }
-    public Array SortingTypes { get; set; } = Enum.GetValues(typeof(SortingType));
+    private List<string> sortingTypes = new List<string>();
+    public List<string> SortingTypes 
+    { 
+        get
+        {
+            Array sortingTypes1 = Enum.GetValues(typeof(SortingType));
+            foreach (SortingType sortingType in sortingTypes1)
+            {
+                sortingTypes.Add(Regex.Replace(sortingType.ToString(), "_", " "));
+            }
+            return sortingTypes;
+        }
+        set { sortingTypes = value; }
+    }
     private SortingType selectedSortingType;
-    public SortingType SelectedSortingType
+    public string SelectedSortingType
     {
-        get { return selectedSortingType; }
+        get { return selectedSortingType.ToString(); }
         set
         {
-            selectedSortingType = value;
-            SetDateSorting(value);
+            string selectedSortingTypeTemp = Regex.Replace(value, " ", "_");
+            Console.WriteLine(selectedSortingTypeTemp);
+            selectedSortingType = (SortingType)Enum.Parse(typeof(SortingType), selectedSortingTypeTemp);
+            SetDateSorting(selectedSortingType);
         }
     }
 
@@ -117,15 +133,23 @@ internal class NotebookPageViewModel
         FilteredNotes.SortDescriptions.Clear();
         switch (sorting)
         {
-            case SortingType.None:
+            case SortingType.Default:
                 break;
-            case SortingType.Ascending:
+            case SortingType.Date_Ascending:
                 FilteredNotes.SortDescriptions.Clear();
                 FilteredNotes.SortDescriptions.Add(new SortDescription("EditDate", ListSortDirection.Ascending));
                 break;
-            case SortingType.Descending:
+            case SortingType.Date_Descending:
                 FilteredNotes.SortDescriptions.Clear();
                 FilteredNotes.SortDescriptions.Add(new SortDescription("EditDate", ListSortDirection.Descending));
+                break;
+            case SortingType.Title_Ascending:
+                FilteredNotes.SortDescriptions.Clear();
+                FilteredNotes.SortDescriptions.Add(new SortDescription("Title", ListSortDirection.Ascending));
+                break;
+            case SortingType.Title_Descending:
+                FilteredNotes.SortDescriptions.Clear();
+                FilteredNotes.SortDescriptions.Add(new SortDescription("Title", ListSortDirection.Descending));
                 break;
         }
 

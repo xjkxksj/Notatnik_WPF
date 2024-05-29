@@ -45,7 +45,7 @@
                                     <TextBlock Text="{Binding Name}" HorizontalAlignment="Left" MaxWidth="150" TextTrimming="CharacterEllipsis"/>
                                     <Button Command="{Binding DataContext.DeleteCategoryCommand , RelativeSource={RelativeSource AncestorType=UserControl}}" 
                                         CommandParameter="{Binding}" 
-                                        Style="{DynamicResource OkButton}" 
+                                        Style="{DynamicResource CancelButton}" 
                                         HorizontalAlignment="Right">
                                         <TextBlock>-</TextBlock>
                                     </Button>
