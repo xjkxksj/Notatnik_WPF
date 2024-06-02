@@ -23,6 +23,7 @@ internal class NotebookPageViewModel
 
     public ICollectionView FilteredNotes { get; set; }
     public ICommand AddNoteCommand { get; set; }
+    public ICommand ChangeLanguageCommand { get; set; }
     private List<string> sortingTypes = new List<string>();
     public List<string> SortingTypes 
     { 
@@ -56,8 +57,10 @@ internal class NotebookPageViewModel
 
         //repository.loadFromFile("RepoNotes.txt");
         //repository.loadFromFile("RepoCategories.txt");
+        SetLanguage.SetLanguageDictionaryAtStart();
         repository.loadFromFile("Repo.txt");
         AddNoteCommand = new RelayCommand(AddNote);
+        ChangeLanguageCommand = new RelayCommand(SetDifferentLanguage);
         Notes = new ObservableCollection<NoteItemViewModel>();
         foreach (Note note in repository.Notes)
         {
@@ -221,6 +224,9 @@ internal class NotebookPageViewModel
         Messenger.Send("CategoryChanged", repository.Categories);
     }
 
-
+    private void SetDifferentLanguage(object lang)
+    {
+        SetLanguage.ChangeLanguageDictionary(lang.ToString());
+    }
 
 }

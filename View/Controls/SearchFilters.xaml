@@ -16,18 +16,18 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <TextBlock
-            Text="Search Filters"
+            Text="{DynamicResource FilterTitleStr}"
             FontSize="18"
             FontWeight="Bold"
             Margin="10"
             HorizontalAlignment="Center"
             />
             <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
-                <TextBlock Text="From " FontSize="15"></TextBlock>
+                <TextBlock Text="{DynamicResource FromStr}" FontSize="15"></TextBlock>
                 <DatePicker x:Name="datePicker" DisplayDateStart="1900-01-01" SelectedDate="{Binding FromDate}" />
             </StackPanel>
             <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
-            <TextBlock Text="To " FontSize="15"></TextBlock>
+            <TextBlock Text="{DynamicResource ToStr}" FontSize="15"></TextBlock>
             <DatePicker x:Name="datePicker2" DisplayDateStart="1900-01-01" SelectedDate="{Binding ToDate}" />
             </StackPanel>
 
@@ -36,7 +36,7 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <Label Target="CategorySelect" HorizontalAlignment="Center"  FontSize="15" FontWeight="Bold">_Category</Label>
+                <Label Target="CategorySelect" HorizontalAlignment="Center"  FontSize="15" FontWeight="Bold" Content="{DynamicResource CategoryDialogStr}"/>
                 <StackPanel Grid.Row="1" Orientation="Horizontal" Width="auto" >
                     <ComboBox Name="CategorySelect" Width="150" ItemsSource="{Binding Categories}" SelectedItem="{Binding SelectedCategory}">
                         <ComboBox.ItemTemplate>
@@ -63,7 +63,7 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <Label Target="TagsSelect" HorizontalAlignment="Center" FontSize="15" FontWeight="Bold">_Tags</Label>
+                <Label Target="TagsSelect" HorizontalAlignment="Center" FontSize="15" FontWeight="Bold" Content="{DynamicResource TagsDialogStr}"/>
                 <TextBox Grid.Row="1" Name="TagsSelect" MaxWidth="180" Height="50" Text="{Binding Tags, UpdateSourceTrigger=PropertyChanged}"/>
             </Grid>
         </Grid>

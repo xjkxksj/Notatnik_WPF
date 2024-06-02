@@ -22,21 +22,21 @@
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="4*"/>
         </Grid.ColumnDefinitions>
-        <Label Target="Name" Margin="3">_Name:</Label>
+        <Label Target="Name" Margin="3" Content="{DynamicResource NameDialogStr}"/>
         <TextBox Margin="3" Grid.Column="1" Name="Name" MaxHeight="28" Text="{Binding Title}"/>
-        <Label Target="Content" Margin="3" Grid.Row="1">C_ontent:</Label>
+        <Label Target="Content" Margin="3" Grid.Row="1" Content="{DynamicResource ContentDialogStr}"/>
         <TextBox Margin="3" Grid.Row="1" Grid.Column="1" Name="Content" 
                  TextWrapping="Wrap"
                  AcceptsReturn="True"
                  VerticalScrollBarVisibility="Visible"
                  Text="{Binding Content}"/>
-        <Label Target="Category" Margin="3" Grid.Row="2">_Category:</Label>
+        <Label Target="Category" Margin="3" Grid.Row="2" Content="{DynamicResource CategoryDialogStr}"/>
         <ComboBox Margin="3" Grid.Row="2" Grid.Column="1" Name="Category" MaxHeight="28" ItemsSource="{Binding Categories}"
                   DisplayMemberPath="Name"
                   SelectedIndex="0"
                   SelectedValue="{Binding SelectedCategory, Mode=TwoWay}">
         </ComboBox>
-        <Label Target="Tags" Margin="3" Grid.Row="3">_Tags:</Label>
+        <Label Target="Tags" Margin="3" Grid.Row="3" Content="{DynamicResource TagsDialogStr}"/>
         <Grid Grid.Row="3" Grid.Column="1">
             <TextBox Name="Tags" Text="{Binding TagsText ,UpdateSourceTrigger=PropertyChanged}"></TextBox>
 
@@ -45,8 +45,8 @@
         <StackPanel Orientation="Horizontal" Grid.Row="4"
                     Grid.ColumnSpan="2" HorizontalAlignment="Right"
                     MaxHeight="48">
-            <Button IsDefault="True" Style="{DynamicResource OkButton}" Command="{Binding AddNoteCommand}">O_K</Button>
-            <Button IsCancel="True" Style="{DynamicResource CancelButton}">C_ancel</Button>
+            <Button IsDefault="True" Style="{DynamicResource OkButton}" Command="{Binding AddNoteCommand}" Content="{DynamicResource OkStr}"/>
+            <Button IsCancel="True" Style="{DynamicResource CancelButton}" Content="{DynamicResource CancelStr}"/>
         </StackPanel>
     </Grid>
 </Window>

@@ -15,17 +15,27 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*" />
-            <RowDefinition Height="6*" />
+            <RowDefinition Height="3*" />
+            <RowDefinition Height="15*" />
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Column="0" Grid.Row="0" Text="Notebook" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Grid.Row="1">
+        <ToolBarTray Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2">
+            <ToolBar>
+                <Menu>
+                    <MenuItem Header="Polski" Command="{Binding ChangeLanguageCommand}" CommandParameter="pl-PL"/>
+                    <MenuItem Header="English" Command="{Binding ChangeLanguageCommand}" CommandParameter="en-US"/>
+                    <MenuItem Header="Español" Command="{Binding ChangeLanguageCommand}" CommandParameter="es-ES"/>
+                </Menu>
+            </ToolBar>
+        </ToolBarTray>
+        <TextBlock Grid.Column="0" Grid.Row="1" Text="{DynamicResource TitleStr}" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Grid.Row="2">
             <StackPanel>
-                <Button Style="{DynamicResource OkButton}" Command="{Binding AddNoteCommand}">Add _Note</Button>
-                <Label Target="SortTypes">Sort _by:</Label>
+                <Button Style="{DynamicResource OkButton}" Command="{Binding AddNoteCommand}" Content="{DynamicResource AddNoteStr}"/>
+                <Label Target="SortTypes" Content="{DynamicResource SortByStr}"/>
                 <ComboBox Name="SortTypes" Margin="5 0 5 0" ItemsSource="{Binding SortingTypes}" SelectedItem="{Binding SelectedSortingType}"/>
                 <Expander Name="FiltersExpander" HorizontalAlignment="Left"
-                  Header="_Filters" 
+                  Header="{DynamicResource FiltersStr}" 
                   ExpandDirection="Down" IsExpanded="True">
 
                     <local:SearchFilters />
@@ -34,10 +44,10 @@
         </ScrollViewer>
 
 
-        <local:SearchBar Grid.Column="1" Grid.Row="0" Margin="10,5,10,10"/>
+        <local:SearchBar Grid.Column="1" Grid.Row="1" Margin="10,5,10,10"/>
 
 
-        <Border Grid.Column="1" Grid.Row="1"
+        <Border Grid.Column="1" Grid.Row="2"
         CornerRadius="10,10,0,0" BorderBrush="Black" Background="Snow">
 
             <Grid>
@@ -46,7 +56,7 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <TextBlock Text="Notes" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0"/>
+                <TextBlock Text="{DynamicResource SubtitleStr}" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0"/>
                 <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Grid.Row="1">
                     <ItemsControl ItemsSource="{Binding FilteredNotes}">
                         <ItemsControl.ItemTemplate>
