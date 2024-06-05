@@ -63,7 +63,6 @@ internal class SearchFiltersViewModel
             }
 
             string output = string.Join(" ", parts);
-            Trace.WriteLine("TEST-------> " + parts.Length);
 
             filterValues.Tags = new List<Tag>();
             foreach (var tag in parts)
@@ -107,6 +106,7 @@ internal class SearchFiltersViewModel
         {
             Categories.Add(category);
         }
+        selectedCategory = categories[0];
     }   
     private void OpenAddCategory()
     {

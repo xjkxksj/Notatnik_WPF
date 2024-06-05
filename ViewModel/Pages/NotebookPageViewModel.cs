@@ -41,6 +41,7 @@ internal class NotebookPageViewModel
         //repository.loadFromFile("RepoNotes.txt");
         //repository.loadFromFile("RepoCategories.txt");
         repository.loadFromFile("Repo.txt");
+
         AddNoteCommand = new RelayCommand(AddNote);
         Notes = new ObservableCollection<NoteItemViewModel>();
         foreach (Note note in repository.Notes)
@@ -82,7 +83,7 @@ internal class NotebookPageViewModel
                 return false;
             }
 
-            if (filterValues.Category != null && (noteViewModel.Category == null || noteViewModel.Category.Name != filterValues.Category.Name))
+            if ((filterValues.Category != null && filterValues.Category.Name != repository.Categories[0].Name) && (noteViewModel.Category == null || noteViewModel.Category.Name != filterValues.Category.Name))
             {
                 return false;
             }
@@ -195,6 +196,22 @@ internal class NotebookPageViewModel
     {
         repository.Categories.Remove(category);
         Messenger.Send("CategoryChanged", repository.Categories);
+        for(int i = 0; i < repository.Notes.Count; i++)
+        {
+            if (repository.Notes[i].Category == category)
+            {
+                repository.Notes[i].Category = null;
+
+            }
+        }
+        Notes.Clear();
+        foreach (Note note in repository.Notes)
+        {
+            Notes.Add(new NoteItemViewModel(note));
+        }
+        
+        repository.saveToFile("Repo.txt");
+
     }
 
 

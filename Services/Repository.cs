@@ -37,6 +37,9 @@ internal class Repository
             }
             else { emptyLinesCount++; }
         }
+
+        if (Categories.Count == 0)
+            Categories.Add(new Category() { Name = " " });
     }
     public void saveToFile(string fileName)
     {
