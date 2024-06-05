@@ -8,7 +8,9 @@ namespace Notatnik_WPF;
 
 enum SortingType
 {
-    None,
-    Ascending,
-    Descending
+    Default,
+    Date_Ascending,
+    Date_Descending,
+    Title_Ascending,
+    Title_Descending
 }

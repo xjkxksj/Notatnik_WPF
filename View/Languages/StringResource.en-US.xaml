@@ -1,0 +1,20 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+					xmlns:system="clr-namespace:System;assembly=mscorlib">
+    <system:String x:Key="CancelStr">C_ancel</system:String>
+    <system:String x:Key="OkStr">O_K</system:String>
+    <system:String x:Key="AddNoteStr">Add _Note</system:String>
+    <system:String x:Key="SortByStr">Sort _by:</system:String>
+    <system:String x:Key="TitleStr">Notebook</system:String>
+    <system:String x:Key="SubtitleStr">Notes</system:String>
+    <system:String x:Key="NameDialogStr">_Name:</system:String>
+    <system:String x:Key="ContentDialogStr">C_ontent:</system:String>
+    <system:String x:Key="CategoryDialogStr">_Category:</system:String>
+    <system:String x:Key="SearchStr">_Search:</system:String>
+    <system:String x:Key="TagsDialogStr">_Tags:</system:String>
+    <system:String x:Key="FilterTitleStr">Search Filters</system:String>
+    <system:String x:Key="FromStr" xml:space="preserve">From </system:String>
+    <system:String x:Key="ToStr" xml:space="preserve">To </system:String>
+    <system:String x:Key="FiltersStr">_Filters</system:String>
+
+</ResourceDictionary>

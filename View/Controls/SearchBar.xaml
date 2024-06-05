@@ -11,9 +11,9 @@
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*" />
-                <ColumnDefinition Width="5*" />
+                <ColumnDefinition Width="4*" />
             </Grid.ColumnDefinitions>
-            <Label Target="SearchBox" FontSize="17" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,0,0" Grid.Column="0">_Search:</Label>
+            <Label Target="SearchBox" FontSize="17" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,0,0" Grid.Column="0" Content="{DynamicResource SearchStr}"/>
             <TextBox Name="SearchBox" Margin="20,0,20,0" FontSize="28" Height="50" TextWrapping="NoWrap" 
                      Grid.Column="1" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" />
         </Grid>
