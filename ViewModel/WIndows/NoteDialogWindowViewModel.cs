@@ -40,6 +40,7 @@ internal class NoteDialogWindowViewModel : BaseViewModel, ICloseWindows
             Tags = new List<Tag>();
             foreach (var tag in parts)
             {
+                if(tag == "") continue;
                 Tags.Add(new Tag() { Name = tag });
             }
 
@@ -47,6 +48,7 @@ internal class NoteDialogWindowViewModel : BaseViewModel, ICloseWindows
         }
     }
 
+    public bool IsDialogCanceled { get; set; } = true;
     public string Title { get; set; }
     public string Content { get; set; }
     public Category SelectedCategory { get; set; }
@@ -68,14 +70,28 @@ internal class NoteDialogWindowViewModel : BaseViewModel, ICloseWindows
     {
         Title = note.Title;
         Content = note.Content;
-        SelectedCategory = note.Category;
+        foreach(var category in categories)
+        {
+            if (category.Name == note.Category.Name)
+            {
+                SelectedCategory = category;
+                break;
+            }
+        }
+        string tags = "";
+        if(note.Tags != null)
+        foreach (var tag in note.Tags)
+        {
+            tags += tag.Name + " ";
+        }
+        TagsText = tags;
     }
 
     private void AddNote()
     {
+        IsDialogCanceled = false;
         Note = new Note { Title = Title, Content = Content, EditTime = DateTime.Now, Category = SelectedCategory, Tags = Tags };
         Messenger.Send("SaveNote", Note);
-
 
         Close?.Invoke();
     }

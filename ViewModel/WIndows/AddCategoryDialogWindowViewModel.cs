@@ -8,6 +8,7 @@ namespace Notatnik_WPF
 
         public ICommand AddCategoryToRepositoryCommand { get; set; }
         public Action Close { get; set; }
+        public bool IsDialogCanceled { get; set; } = true;
 
         public AddCategoryDialogWindowViewModel()
         {
@@ -15,6 +16,7 @@ namespace Notatnik_WPF
         }
         private void AddCategoryToRepository()
         {
+            IsDialogCanceled = false;
             Close?.Invoke();
         }
 
