@@ -227,7 +227,7 @@ internal class NotebookPageViewModel
         {
             if (repository.Notes[i].Category == category)
             {
-                repository.Notes[i].Category = null;
+                repository.Notes[i].Category = repository.Categories[0];
 
             }
         }
