@@ -23,7 +23,7 @@ internal class Repository
         Tags.Clear();
         int emptyLinesCount = 0;
         if (!File.Exists(fileName))
-            return;
+            File.Create(fileName).Close();
         foreach (string line in File.ReadLines(fileName))
         {
             if (line.Length > 1)
