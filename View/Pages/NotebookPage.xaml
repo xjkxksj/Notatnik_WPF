@@ -27,6 +27,11 @@
                     <MenuItem Header="Español" Command="{Binding ChangeLanguageCommand}" CommandParameter="es-ES"/>
                 </Menu>
             </ToolBar>
+            <ToolBar>
+                <Menu>
+                    <MenuItem Header="Change User" Command="{Binding ChangeUserCommand}"/>
+                </Menu>
+            </ToolBar>
         </ToolBarTray>
         <TextBlock Grid.Column="0" Grid.Row="1" Text="{DynamicResource TitleStr}" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Grid.Row="2">

@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Notatnik_WPF;
-internal class Tag
+public class Tag
 {
     public string Name { get; set; }
-    public List<Note> Notes { get; set; }
+    //public List<Note> Notes { get; set; }
 }

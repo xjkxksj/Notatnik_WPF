@@ -12,30 +12,44 @@ namespace Notatnik_WPF;
 internal class Repository
 {
     public static Repository Instance { get; } = new Repository();
-    public List<Note> Notes { get; set; } = new List<Note>();
-    public List<Category> Categories { get; set; } = new List<Category>();
-    public List<Tag> Tags { get; set; }  = new List<Tag>();
+    public List<Note> Notes { get => User.Notes; set => User.Notes = value; }
+    public List<Category> Categories { get => User.Categories; set => User.Categories = value; }
+    public List<User> Users { get; set; }  = new List<User>();
+    public User? User { get; internal set; }
+
 
     public void loadFromFile(string fileName)
     {
-        Notes.Clear();
-        Categories.Clear();
-        Tags.Clear();
-        int emptyLinesCount = 0;
+        if (Users.Count > 0)
+            return;
+
+        //int emptyLinesCount = 0;
         if (!File.Exists(fileName))
             return;
         foreach (string line in File.ReadLines(fileName))
         {
             if (line.Length > 1)
             {
-                if (line.Contains("Title"))
-                    Notes.Add(JsonSerializer.Deserialize<Note>(line));
-                else if (line.Contains("Name") && emptyLinesCount == 1)
-                    Categories.Add(JsonSerializer.Deserialize<Category>(line));
-                else if (line.Contains("Name") && emptyLinesCount == 2)
-                    Tags.Add(JsonSerializer.Deserialize<Tag>(line));
+                Users.Add(JsonSerializer.Deserialize<User>(line));
+
+                //if (line.Contains("Title"))
+                //    Notes.Add(JsonSerializer.Deserialize<Note>(line));
+                //else if (line.Contains("Name") && emptyLinesCount == 1)
+                //    Categories.Add(JsonSerializer.Deserialize<Category>(line));
+                //else if (line.Contains("Name") && emptyLinesCount == 2)
+                //    Tags.Add(JsonSerializer.Deserialize<Tag>(line));
+                //else if (line.Contains("User") && emptyLinesCount == 3)
+                //    Users.Add(JsonSerializer.Deserialize<User>(line));
             }
-            else { emptyLinesCount++; }
+            //else { emptyLinesCount++; }
+        }
+
+        if (Users.Count == 0)
+            Users.Add(new User() { Username = "", Password="" });
+
+        if (User == null)
+        {
+            User = Users[0];
         }
 
         if (Categories.Count == 0)
@@ -43,75 +57,32 @@ internal class Repository
     }
     public void saveToFile(string fileName)
     {
+        foreach (var user in Users)
+        {
+            if(user.Categories.Count == 0)
+                user.Categories.Add(new Category() { Name = " " });
+        }
         File.WriteAllText(fileName, string.Empty);
-        foreach (var note in Notes)
+        //foreach (var note in Notes)
+        //{
+        //    File.AppendAllLines(fileName, [JsonSerializer.Serialize(note)]);
+        //}
+        //File.AppendAllText(fileName, "\n");
+        //foreach (var category in Categories)
+        //{
+        //    File.AppendAllLines(fileName, [JsonSerializer.Serialize(category)]);
+        //}
+        //File.AppendAllText(fileName, "\n");
+        //foreach (var tag in Tags)
+        //{
+        //    File.AppendAllLines(fileName, [JsonSerializer.Serialize(tag)]);
+        //}
+        //File.AppendAllText(fileName, "\n");
+        foreach (var user in Users)
         {
-            File.AppendAllLines(fileName, [JsonSerializer.Serialize(note)]);
-        }
-        File.AppendAllText(fileName, "\n");
-        foreach (var category in Categories)
-        {
-            File.AppendAllLines(fileName, [JsonSerializer.Serialize(category)]);
-        }
-        File.AppendAllText(fileName, "\n");
-        foreach (var tag in Tags)
-        {
-            File.AppendAllLines(fileName, [JsonSerializer.Serialize(tag)]);
+            File.AppendAllLines(fileName, [JsonSerializer.Serialize(user)]);
         }
     }
-    //public void loadFromFile(string fileName)
-    //{
-    //    Notes.Clear();
-    //    Categories.Clear();
-    //    Tags.Clear();
-    //    string firstLine = null;
-    //    if(!File.Exists(fileName))
-    //        return;
-    //    foreach (string line in File.ReadLines(fileName))
-    //    {
-    //        if (firstLine == null)
-    //        {
-    //            firstLine = line;
-    //            Console.WriteLine(firstLine);
-    //            continue;
-    //        }
-    //        if (firstLine.Contains("Notes"))
-    //        {
-    //            Notes.Add(JsonSerializer.Deserialize<Note>(line));
-    //            Console.WriteLine(Notes[0].Title);
-    //        }
-    //        else if (firstLine.Contains("Categories"))
-    //            Categories.Add(JsonSerializer.Deserialize<Category>(line));
-    //        else if (firstLine.Contains("Tags"))
-    //            Tags.Add(JsonSerializer.Deserialize<Tag>(line));
-    //    }
-    //}
-    //public void saveToFile(string fileName, string dataType)
-    //{
-    //    File.WriteAllText(fileName, $"{dataType}:\n");
-    //    if (dataType == "Notes")
-    //    {
-    //        foreach (var note in Notes)
-    //        {
-    //            File.AppendAllLines(fileName, [JsonSerializer.Serialize(note)]);
-    //        }
-    //    }
-    //    else if (dataType == "Categories")
-    //    {
-    //        foreach (var category in Categories)
-    //        {
-    //            File.AppendAllLines(fileName, [JsonSerializer.Serialize(category)]);
-    //        }
-    //    }
-    //    else if (dataType == "Tags")
-    //    {
-    //        foreach (var tag in Tags)
-    //        {
-    //            File.AppendAllLines(fileName, [JsonSerializer.Serialize(tag)]);
-    //        }
-    //    }
-
-    //}
 
 
 

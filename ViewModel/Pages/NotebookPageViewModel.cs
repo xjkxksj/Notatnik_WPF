@@ -24,6 +24,7 @@ internal class NotebookPageViewModel
     public ICollectionView FilteredNotes { get; set; }
     public ICommand AddNoteCommand { get; set; }
     public ICommand ChangeLanguageCommand { get; set; }
+    public ICommand ChangeUserCommand { get; set; }
     private List<string> sortingTypes = new List<string>();
     public List<string> SortingTypes 
     { 
@@ -62,6 +63,7 @@ internal class NotebookPageViewModel
 
         AddNoteCommand = new RelayCommand(AddNote);
         ChangeLanguageCommand = new RelayCommand(SetDifferentLanguage);
+        ChangeUserCommand = new RelayCommand(ChangeUser);
         Notes = new ObservableCollection<NoteItemViewModel>();
         foreach (Note note in repository.Notes)
         {
@@ -77,9 +79,41 @@ internal class NotebookPageViewModel
         Messenger.Subscribe<Note>("SaveNote", SaveNote);
         Messenger.Subscribe<FilterValues>("SetFilters", SetFilters);
         Messenger.Subscribe<Category>("CategoryDeleted", DeleteCategory);
+        Messenger.Subscribe<string>("login", Login);
+        Messenger.Subscribe<User>("register", Register);
         Messenger.Send("CategoryChanged", repository.Categories);
 
 
+    }
+
+    private void Register(User user)
+    {
+        repository.Users.Add(user);
+        repository.saveToFile("repo.txt");
+    }
+
+    private void Login(string username)
+    {
+        repository.User = repository.Users.FirstOrDefault(u => u.Username == username);
+        repository.loadFromFile("repo.txt");
+
+        Notes.Clear();
+        foreach (Note note in repository.Notes)
+        {
+            Notes.Add(new NoteItemViewModel(note));
+        }
+        FilteredNotes.Refresh();
+        Messenger.Send("CategoryChanged", repository.Categories);
+    }
+
+    private void ChangeUser()
+    {
+
+        LoginFormWindowViewModel loginFormVM = new LoginFormWindowViewModel(repository.Users);
+        LoginFormWindow loginFormView = new LoginFormWindow();
+
+        loginFormView.DataContext = loginFormVM;
+        loginFormView.ShowDialog();
     }
 
     private void SetFilters(FilterValues filterValues)
@@ -211,6 +245,8 @@ internal class NotebookPageViewModel
             Notes.Remove(openedNote);
             openedNote = null;
         }
+
+        //note.User = repository.User;
 
         repository.Notes.Add(note);
         repository.saveToFile("Repo.txt");
