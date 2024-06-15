@@ -5,8 +5,9 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Notatnik_WPF"
       local:WindowCloser.EnableWindowClosing="True"
-      mc:Ignorable="d" Height="350" MinWidth="400" MinHeight="350" 
+      mc:Ignorable="d" Height="350" MinWidth="500" MinHeight="350" 
       d:DesignWidth="400" d:DesignHeight="350"
+      ResizeMode="NoResize"
       SizeToContent="Width"
       Title="NoteDialogWindow">
 
@@ -23,12 +24,13 @@
             <ColumnDefinition Width="4*"/>
         </Grid.ColumnDefinitions>
         <Label Target="Name" Margin="3" Content="{DynamicResource NameDialogStr}"/>
-        <TextBox Margin="3" Grid.Column="1" Name="Name" MaxHeight="28" Text="{Binding Title}"/>
+        <TextBox Margin="3" Grid.Column="1" Name="Name" MaxHeight="28" Text="{Binding Title}" MaxLength="25"/>
         <Label Target="Content" Margin="3" Grid.Row="1" Content="{DynamicResource ContentDialogStr}"/>
         <TextBox Margin="3" Grid.Row="1" Grid.Column="1" Name="Content" 
                  TextWrapping="Wrap"
                  AcceptsReturn="True"
                  VerticalScrollBarVisibility="Visible"
+                 MaxWidth="400"
                  Text="{Binding Content}"/>
         <Label Target="Category" Margin="3" Grid.Row="2" Content="{DynamicResource CategoryDialogStr}"/>
         <ComboBox Margin="3" Grid.Row="2" Grid.Column="1" Name="Category" MaxHeight="28" ItemsSource="{Binding Categories}"

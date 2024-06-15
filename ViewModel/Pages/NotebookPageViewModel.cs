@@ -30,8 +30,8 @@ internal class NotebookPageViewModel
     { 
         get
         {
-            Array sortingTypes1 = Enum.GetValues(typeof(SortingType));
-            foreach (SortingType sortingType in sortingTypes1)
+            Array sortingTypesTemp = Enum.GetValues(typeof(SortingType));
+            foreach (SortingType sortingType in sortingTypesTemp)
             {
                 sortingTypes.Add(Regex.Replace(sortingType.ToString(), "_", " "));
             }
@@ -209,13 +209,16 @@ internal class NotebookPageViewModel
         NoteItemViewModel vm = Notes.FirstOrDefault(n => n.Title == title);
 
         openedNote = vm;
-        repository.Notes.Remove(note);
-
         NoteDialogWindowViewModel addNoteVM = new NoteDialogWindowViewModel(repository.Categories, note);
         NoteDialogWindow addNoteView = new NoteDialogWindow();
 
         addNoteView.DataContext = addNoteVM;
         addNoteView.ShowDialog();
+        if (!addNoteVM.IsDialogCanceled)
+        {
+            repository.Notes.Remove(note);
+            repository.saveToFile("Repo.txt");
+        }
     }
     private void CreateCategory(string categoryName)
     {
@@ -236,10 +239,10 @@ internal class NotebookPageViewModel
 
     private void SaveNote(Note note)
     {
-        if(repository.Notes.FirstOrDefault(n => n.Title == note.Title) != null)
-        {
-            return;
-        }
+        //if(repository.Notes.FirstOrDefault(n => n.Title == note.Title) != null)
+        //{
+        //    return;
+        //}
         if (openedNote != null)
         {
             Notes.Remove(openedNote);
