@@ -1,18 +1,19 @@
 ﻿<Window x:Class="Notatnik_WPF.NoteDialogWindow"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:Notatnik_WPF"
-      local:WindowCloser.EnableWindowClosing="True"
-      mc:Ignorable="d" Height="350" MinWidth="500" MinHeight="350" 
-      d:DesignWidth="400" d:DesignHeight="350"
-      ResizeMode="NoResize"
-      SizeToContent="Width"
-      Title="NoteDialogWindow">
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:local="clr-namespace:Notatnik_WPF"
+        local:WindowCloser.EnableWindowClosing="True"
+        mc:Ignorable="d" Height="350" MinWidth="500" MinHeight="350" 
+        d:DesignWidth="400" d:DesignHeight="350"
+        ResizeMode="NoResize"
+        SizeToContent="Width"
+        Title="NoteDialogWindow">
 
     <Grid Background="#d7d9ce">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="3*"/>
             <RowDefinition Height="1*"/>
@@ -23,32 +24,44 @@
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="4*"/>
         </Grid.ColumnDefinitions>
-        <Label Target="Name" Margin="3" Content="{DynamicResource NameDialogStr}"/>
-        <TextBox Margin="3" Grid.Column="1" Name="Name" MaxHeight="28" Text="{Binding Title}" MaxLength="25"/>
-        <Label Target="Content" Margin="3" Grid.Row="1" Content="{DynamicResource ContentDialogStr}"/>
-        <TextBox Margin="3" Grid.Row="1" Grid.Column="1" Name="Content" 
+
+        <ToolBarTray Grid.Row="0" Grid.ColumnSpan="2">
+            <ToolBar>
+                <CheckBox Content="Title" IsChecked="{Binding PrintTitle}"/>
+                <CheckBox Content="Description" IsChecked="{Binding PrintDescription}"/>
+                <CheckBox Content="Category" IsChecked="{Binding PrintCategory}"/>
+                <CheckBox Content="Tags" IsChecked="{Binding PrintTags}"/>
+                <Button Content="Print" Command="{Binding PrintPreviewCommand}"/>
+            </ToolBar>
+        </ToolBarTray>
+
+        <Label Target="Name" Margin="3" Content="{DynamicResource NameDialogStr}" Grid.Row="1"/>
+        <TextBox Margin="3" Grid.Row="1" Grid.Column="1" Name="Name" MaxHeight="28" Text="{Binding Title}" MaxLength="25"/>
+        <Label Target="Content" Margin="3" Grid.Row="2" Content="{DynamicResource ContentDialogStr}" />
+        <TextBox Margin="3" Grid.Row="2" Grid.Column="1" Name="Content" 
                  TextWrapping="Wrap"
                  AcceptsReturn="True"
                  VerticalScrollBarVisibility="Visible"
                  MaxWidth="400"
                  Text="{Binding Content}"/>
-        <Label Target="Category" Margin="3" Grid.Row="2" Content="{DynamicResource CategoryDialogStr}"/>
-        <ComboBox Margin="3" Grid.Row="2" Grid.Column="1" Name="Category" MaxHeight="28" ItemsSource="{Binding Categories}"
+        <Label Target="Category" Margin="3" Grid.Row="3" Content="{DynamicResource CategoryDialogStr}"/>
+        <ComboBox Margin="3" Grid.Row="3" Grid.Column="1" Name="Category" MaxHeight="28" ItemsSource="{Binding Categories}"
                   DisplayMemberPath="Name"
                   SelectedIndex="0"
                   SelectedValue="{Binding SelectedCategory, Mode=TwoWay}">
         </ComboBox>
-        <Label Target="Tags" Margin="3" Grid.Row="3" Content="{DynamicResource TagsDialogStr}"/>
-        <Grid Grid.Row="3" Grid.Column="1">
+        <Label Target="Tags" Margin="3" Grid.Row="4" Content="{DynamicResource TagsDialogStr}"/>
+        <Grid Grid.Row="4" Grid.Column="1">
             <TextBox Name="Tags" Text="{Binding TagsText ,UpdateSourceTrigger=PropertyChanged}"></TextBox>
 
         </Grid>
 
-        <StackPanel Orientation="Horizontal" Grid.Row="4"
+        <StackPanel Orientation="Horizontal" Grid.Row="5"
                     Grid.ColumnSpan="2" HorizontalAlignment="Right"
                     MaxHeight="48">
             <Button IsDefault="True" Style="{DynamicResource OkButton}" Command="{Binding AddNoteCommand}" Content="{DynamicResource OkStr}"/>
             <Button IsCancel="True" Style="{DynamicResource CancelButton}" Content="{DynamicResource CancelStr}"/>
         </StackPanel>
+
     </Grid>
 </Window>

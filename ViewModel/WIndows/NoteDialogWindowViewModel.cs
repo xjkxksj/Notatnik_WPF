@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -8,14 +9,22 @@ using System.Threading.Channels;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
+using System.Windows.Documents.Serialization;
 using System.Windows.Input;
+using System.Windows.Xps;
+using System.Windows.Xps.Packaging;
 
 namespace Notatnik_WPF;
 
 internal class NoteDialogWindowViewModel : BaseViewModel, ICloseWindows
 {
     public ObservableCollection<Category> Categories { get; set; }
-
+    public bool PrintTitle { get; set; } = true;
+    public bool PrintDescription { get; set; } = true;
+    public bool PrintCategory { get; set; } = true;
+    public bool PrintTags { get; set; } = true;
+    public ICommand PrintPreviewCommand { get; set; }
     List<Tag> Tags;
     private string tagsText;
     public string TagsText
@@ -59,11 +68,13 @@ internal class NoteDialogWindowViewModel : BaseViewModel, ICloseWindows
 
     public NoteDialogWindowViewModel(List<Category> categories)
     {
+        PrintPreviewCommand = new RelayCommand(PrintPreview);
         Categories = new ObservableCollection<Category>(categories);
 
         AddNoteCommand = new RelayCommand(AddNote);
         if (categories.Count > 0)
             SelectedCategory = categories[0];
+
     }
 
     public NoteDialogWindowViewModel(List<Category> categories, Note note) : this(categories)
@@ -96,6 +107,98 @@ internal class NoteDialogWindowViewModel : BaseViewModel, ICloseWindows
         Close?.Invoke();
     }
 
+
+    private FlowDocument GenerateFlowDocument()
+    {
+        FlowDocument doc = new FlowDocument();
+        doc.PagePadding = new Thickness(50);
+        doc.ColumnWidth = double.PositiveInfinity;
+
+        // Create a title
+        if (PrintTitle)
+        {
+            Paragraph title = new Paragraph(new Run("Title: " + Title))
+            {
+                FontSize = 24,
+                FontWeight = FontWeights.Bold,
+                TextAlignment = TextAlignment.Center
+            };
+            doc.Blocks.Add(title);
+            doc.Blocks.Add(new Paragraph(new LineBreak()));
+        }
+
+        // Create a description
+        if (PrintDescription)
+        {
+            Paragraph description = new Paragraph(new Run("Description: " + Content))
+            {
+                FontSize = 16,
+                FontWeight = FontWeights.Normal,
+                TextAlignment = TextAlignment.Left
+            };
+            doc.Blocks.Add(description);
+            doc.Blocks.Add(new Paragraph(new LineBreak()));
+            doc.Blocks.Add(new BlockUIContainer(new Separator()));
+        }
+
+        // Create a category
+        if (PrintCategory)
+        {
+            Paragraph category = new Paragraph(new Run("Category: " + SelectedCategory.Name))
+            {
+                FontSize = 16,
+                FontWeight = FontWeights.Normal,
+                TextAlignment = TextAlignment.Left
+            };
+            doc.Blocks.Add(category);
+            doc.Blocks.Add(new Paragraph(new LineBreak()));
+            doc.Blocks.Add(new BlockUIContainer(new Separator()));
+        }
+
+        // Create tags
+        if (PrintTags)
+        {
+            string tags = string.Join(", ", Tags.Select(t => t.Name));
+            Paragraph tagsParagraph = new Paragraph(new Run("Tags: " + tags))
+            {
+                FontSize = 16,
+                FontWeight = FontWeights.Normal,
+                TextAlignment = TextAlignment.Left
+            };
+            doc.Blocks.Add(tagsParagraph);
+            doc.Blocks.Add(new Paragraph(new LineBreak()));
+            doc.Blocks.Add(new BlockUIContainer(new Separator()));
+        }
+
+        return doc;
+    }
+
+    private void PrintPreview()
+    {
+        string xpsFilePath = "print_prev.xps";
+        if (File.Exists(xpsFilePath))
+            File.Delete(xpsFilePath);
+
+        FlowDocument doc = GenerateFlowDocument();
+        XpsDocument xpsDocument = new XpsDocument(xpsFilePath, FileAccess.ReadWrite);
+        XpsDocumentWriter writer = XpsDocument.CreateXpsDocumentWriter(xpsDocument);
+        writer.Write(((IDocumentPaginatorSource)doc).DocumentPaginator);
+        FixedDocumentSequence preview = xpsDocument.GetFixedDocumentSequence();
+        xpsDocument.Close();
+
+        var window = new Window
+        {
+            Title = "Print Preview",
+            Content = new DocumentViewer { Document = preview },
+            Width = 900,
+            Height = 700
+        };
+        window.ShowDialog();
+
+        writer = null;
+        xpsDocument = null;
+        preview = null;
+    }
     public bool CanClose()
     {
         return true;
