@@ -8,6 +8,7 @@ using System.Windows.Markup;
 using System.Globalization;
 using System.Threading;
 using System.Collections;
+using Application = System.Windows.Application;
 
 
 namespace Notatnik_WPF

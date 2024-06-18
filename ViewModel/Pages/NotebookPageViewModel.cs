@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
+using MessageBox = System.Windows.MessageBox;
 
 namespace Notatnik_WPF;
 internal class NotebookPageViewModel
@@ -239,10 +240,16 @@ internal class NotebookPageViewModel
 
     private void SaveNote(Note note)
     {
-        //if(repository.Notes.FirstOrDefault(n => n.Title == note.Title) != null)
-        //{
-        //    return;
-        //}
+        if(note.Title == null)
+        {
+            MessageBox.Show("Title is required");
+            return;
+        }
+        if (repository.Notes.FirstOrDefault(n => n.Title == note.Title) != null)
+        {
+            MessageBox.Show("Note with this title already exists");
+            return;
+        }
         if (openedNote != null)
         {
             Notes.Remove(openedNote);

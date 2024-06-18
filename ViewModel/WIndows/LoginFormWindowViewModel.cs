@@ -6,14 +6,20 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using MessageBox = System.Windows.MessageBox;
+
 
 namespace Notatnik_WPF;
 
-public class LoginFormWindowViewModel
+public class LoginFormWindowViewModel : BaseViewModel, ICloseWindows
 {
     public string Username { get; set; }
     public string Password { get; set; }
     private List<User> users;
+    public ICommand LoginCommand { get; }
+    public ICommand RegisterCommand { get; }
+    public Action Close { get; set; }
+    public bool IsDialogCanceled { get; set; } = true;
 
     public LoginFormWindowViewModel(List<User> users)
     {
@@ -21,10 +27,6 @@ public class LoginFormWindowViewModel
         LoginCommand = new RelayCommand(Login);
         RegisterCommand = new RelayCommand(Register);
     }
-
-    public ICommand LoginCommand { get; }
-    public ICommand RegisterCommand { get; }
-
 
     private void Login()
     {
@@ -35,7 +37,7 @@ public class LoginFormWindowViewModel
         if (userExists)
         {
             Messenger.Send("login", username);
-
+            Close?.Invoke();
         }
         else
         {
@@ -49,7 +51,6 @@ public class LoginFormWindowViewModel
         if (userExists)
         {
             MessageBox.Show("User already exist");
-            
         }
         else
         {
@@ -58,4 +59,8 @@ public class LoginFormWindowViewModel
         }
     }
 
+    public bool CanClose()
+    {
+        return true;
+    }
 }

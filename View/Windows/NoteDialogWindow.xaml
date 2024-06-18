@@ -5,7 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
         xmlns:local="clr-namespace:Notatnik_WPF"
         local:WindowCloser.EnableWindowClosing="True"
-        mc:Ignorable="d" Height="350" MinWidth="500" MinHeight="350" 
+        mc:Ignorable="d" Height="400" MinWidth="500" MinHeight="350" 
         d:DesignWidth="400" d:DesignHeight="350"
         ResizeMode="NoResize"
         SizeToContent="Width"
